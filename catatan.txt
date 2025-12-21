@@ -1,0 +1,13 @@
+1. Untuk database: data apa yang dimasukkan apa saja?
+2. Perlu variabel konstan dari data yang diambil
+3. Perlu penyingkronan antara data geojson dengan data tabular/ tabel
+4. Perlu pertimbangan apakah data yang diupload nantinya replace
+5. Admin apakah perlu ada superadmin atau cuman 1 admin
+
+Warna Batas Administrasi :
+1. Kab/Kot : Abu
+2. Kecamatan : Biru
+3. Desa : Merah
+4. Eksisting : Kuning
+5. RTRW : Oranye
+

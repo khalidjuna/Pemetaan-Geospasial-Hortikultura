@@ -1,0 +1,1961 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport" />
+  <meta content="" name="description" />
+  <meta content="" name="author" />
+
+  <title>Geospasial - Kaltim</title>
+  <!-- Favicon-->
+  <link href="images/ruhui.png" rel="icon" type="image/x-icon" />
+  <!-- Bootstrap -->
+  <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" rel="stylesheet" />
+  <!-- Fontawesome CSS Library -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" rel="stylesheet" />
+  <!-- Leaflet CSS Library -->
+  <link crossorigin="" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" rel="stylesheet" />
+  <!-- Select2 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+
+  <style>
+    html,
+    body,
+    #map {
+      height: 96%;
+      width: 100%;
+      margin: 0px;
+      padding: 0px;
+    }
+
+    .leaflet-popup-content-wrapper {
+      width: 800px !important;
+      height: 300px !important;
+    }
+
+    .leaflet-popup-content {
+      width: 95% !important;
+      height: 90%;
+    }
+
+    #goToBtn {
+      display: none;
+    }
+
+    .modal-table select {
+      width: 100%;
+    }
+
+    .modal-dialog {
+      max-width: 600px;
+      /* Atur lebar modal sesuai kebutuhan */
+    }
+
+    .select2-container {
+      z-index: 1100;
+      /* Pastikan dropdown muncul di atas modal */
+    }
+
+    .select2-dropdown {
+      max-width: 100%;
+      /* Batasi lebar dropdown sesuai dengan modal */
+      overflow-x: hidden;
+      /* Hilangkan potongan horizontal */
+    }
+  </style>
+  <!-- munculkan mouse koordinat-->
+  <link href="library/leaflet-mouseposition/L.Control.MousePosition.css" rel="stylesheet" />
+  <!-- Geolocation CSS Library -->
+  <link href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.css"
+    rel="stylesheet" />
+  <!-- Measurement CSS Library -->
+  <link href="library/leaflet-measure/leaflet-measure.css" rel="stylesheet" />
+  <!-- Layer Control -->
+  <link href="library/leaflet-layer-control/L.Control.Layers.Tree.css" rel="stylesheet" />
+  <!-- Core theme CSS (includes Bootstrap)-->
+  <link href="css/stylesmap.css" rel="stylesheet" />
+  <style>
+    /* Styling for Modal "Cari Lokasi" */
+    /* Custom Modal Styling */
+    .modal-content {
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .modal-header {
+      border-bottom: 2px solid #eee;
+    }
+
+    .modal-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #007bff;
+    }
+
+    .close {
+      color: #007bff;
+      font-size: 1.5rem;
+    }
+
+    .close:hover {
+      color: #0056b3;
+      cursor: pointer;
+    }
+
+    /* Style the dropdowns */
+    .form-control {
+      border-radius: 10px;
+      padding: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      margin-bottom: 10px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    /* Button Styling */
+    #goToBtn {
+      display: none;
+      /* Initially hidden */
+      background-color: #28a745;
+      color: white;
+      border-radius: 25px;
+      padding: 12px 20px;
+      font-size: 16px;
+      border: none;
+      transition: background-color 0.3s ease;
+    }
+
+    #goToBtn:hover {
+      background-color: #218838;
+      cursor: pointer;
+    }
+
+    /* Add a fade-in animation to the modal */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Style for the map container */
+    .map-container {
+      margin-top: 20px;
+    }
+
+    /* Style for the table inside the modal */
+    .modal-table th,
+    .modal-table td {
+      padding: 15px;
+      vertical-align: auto;
+      border: #000000;
+    }
+
+    .modal-table th {
+      width: 100%;
+      background-color: #f8f9fa;
+      font-weight: bold;
+      border: 1px solid #dddddd;
+    }
+
+    .modal-table td {
+      width: 100%;
+      border: 1px solid #dddddd;
+    }
+
+    th:nth-child(even),
+    td:nth-child(even) {
+      background-color: #f0f0f6;
+    }
+
+    .fullscreen-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+    }
+
+    .fullscreen-overlay img {
+      transform: scale(1);
+      transition: transform 0.3s ease;
+      max-width: 90%;
+      max-height: 90%;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Bootstrap core JS-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+  <!-- Core theme JS-->
+  <script src="js/scriptsmap.js"></script>
+  <!-- Leaflet JavaScript Library -->
+  <script crossorigin="" src="https://unpkg.com/leaflet@1.7.1/dist/leaflet-src.js"></script>
+  <script
+    src="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.min.js"></script>
+  <script src="library/leaflet-mouseposition/L.Control.MousePosition.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="library/leaflet-measure/leaflet-measure.js"></script>
+  <script src="library/leaflet-layer-control/L.Control.Layers.Tree.js"></script>
+  <!-- Select2 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.5/dist/umd/popper.min.js"></script>
+
+  <!-- Top navigation-->
+  <nav class="navbar navbar-expand-lg" style="background-color: red">
+    <div class="container-fluid">
+      <a class="navbar-brand text-white">Geospasial Bidang Produksi Hortikultura</a>
+      <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+        class="navbar-toggler" data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+          <li class="nav-item py-2">
+            <button class="btn btn-light me-2" id="openModalBtn">Lokasi Komoditas</button>
+          </li>
+          <li class="nav-item py-2">
+            <button class="btn btn-light" id="openModalEksistingBtn">Lahan Eksisting</button>
+          </li>
+        </ul>
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a style="color: #fff;" class="nav-link" href="index.html"><i class="fas fa-home"></i> HOME</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Modal for Filter Form Komoditas -->
+  <div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" style="color: #000000;" id="filterModalLabel">Lokasi Komoditas</h5>
+          <button type="button" class="btn-danger btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <table class="table modal-table">
+            <tr>
+              <th>Pilih Komoditas</th>
+              <td>
+                <select id="komoditasSelect" class="form-control"></select>
+              </td>
+            </tr>
+            <tr>
+              <th>Pilih Kabupaten/Kota</th>
+              <td>
+                <select id="kabupatenSelect" class="form-control"></select>
+              </td>
+            </tr>
+            <tr>
+              <th>Pilih Desa/Kelurahan</th>
+              <td>
+                <select id="desaSelect" class="form-control"></select>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <button id="goToBtn" class="btn btn-success w-100">Pergi Ke</button>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Filter Form Lahan Eksisting -->
+  <div class="modal fade" id="filterModalEksisting" tabindex="-1" aria-labelledby="filterModalEksistingLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" style="color: #000000;" id="filterModalEksistingLabel">Lahan Eksisting</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <select id="locationSelectEksisting" class="form-control" style="width: 100%"></select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tutup</button>
+          <button type="button" id="goToBtnEksisting" class="btn btn-primary" disabled>Pilih</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap Modal -->
+  <div class="modal fade" id="featureModal" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-danger">
+          <h4 class="modal-title text-white" id="feature-title"></h4>
+        </div>
+        <div class="modal-body" id="feature-info"></div>
+        <div class="modal-footer">
+          <button class="btn btn-danger" data-bs-dismiss="modal" type="button">Tutup</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Page content-->
+  <div id="map">
+    <div class="fullscreen-overlay" id="fullscreenOverlay">
+      <img src="" alt="Fullscreen Image" id="fullscreenImage">
+    </div>
+  </div>
+
+  <script>
+    // Fungsi untuk Memuat Data GeoJSON dan Mengisi Dropdown
+    function loadEksistingData() {
+      fetch("data/eksisting.geojson") // Path GeoJSON Anda
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`Gagal memuat GeoJSON: ${response.statusText}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log("Data GeoJSON berhasil dimuat:", data);
+
+          if (!data.features || !data.features.length) {
+            throw new Error("GeoJSON tidak memiliki fitur.");
+          }
+
+          // Map field `Ket` untuk teks dropdown
+          const dropdownData = data.features
+            .map((feature) => {
+              const { Ket, Center_X, Center_Y } = feature.properties;
+
+              // Periksa apakah semua properti yang dibutuhkan ada
+              if (!Ket || !Center_X || !Center_Y) {
+                console.warn("Properti tidak lengkap pada fitur:", feature);
+                return null; // Lewati fitur jika tidak lengkap
+              }
+
+              // Pastikan data yang valid ditambahkan ke dropdown
+              return {
+                value: Ket,
+                text: Ket,
+                center: `${Center_Y},${Center_X}`, // Gabungkan koordinat
+              };
+            })
+            .filter(Boolean); // Hilangkan entri null atau undefined
+
+          if (dropdownData.length > 0) {
+            populateDropdown("#locationSelectEksisting", dropdownData); // Isi dropdown
+          } else {
+            console.warn("Tidak ada data valid untuk dimasukkan ke dropdown.");
+          }
+        })
+        .catch((error) => {
+          console.error("Terjadi kesalahan:", error);
+        });
+    }
+
+    // Fungsi untuk Mengisi Dropdown Select2
+    function populateDropdown(id, data) {
+      $(id).empty().append('<option value="">Pilih Lokasi</option>'); // Reset dropdown
+      data.forEach((item) => {
+        $(id).append(
+          `<option value="${item.value}" data-center="${item.center}">${item.text}</option>` // Gunakan Ket untuk teks
+        );
+      });
+
+      // Inisialisasi Select2
+      $(id).select2({
+        width: "style",
+        dropdownAutoWidth: true,
+      });
+
+      console.log(`Dropdown ${id} berhasil diisi.`);
+    }
+
+    // Event Listener untuk Dropdown Lahan Eksisting
+    $("#locationSelectEksisting").on("change", function () {
+      const selectedValue = $(this).val();
+      $("#goToBtnEksisting").prop("disabled", !selectedValue); // Aktifkan tombol hanya jika ada nilai yang dipilih
+      console.log("Pilihan dropdown:", selectedValue);
+    });
+
+    // Tombol "Pilih" pada Modal Lahan Eksisting
+    $("#goToBtnEksisting").on("click", function () {
+      var selectedOption = $("#locationSelectEksisting").find(":selected");
+      if (selectedOption.val()) {
+        var center = selectedOption.data("center");
+
+        if (center) {
+          var coordinates = center.split(",").map(Number); // Konversi menjadi array angka
+          console.log("Koordinat yang dipilih:", coordinates);
+
+          // Update Peta
+          map.setView(coordinates, 13);
+
+          // Tutup Modal
+          $("#filterModalEksisting").modal("hide");
+        } else {
+          console.warn("Koordinat tidak tersedia untuk lokasi yang dipilih.");
+        }
+      } else {
+        alert("Silakan pilih lokasi terlebih dahulu!");
+      }
+    });
+
+    // Tombol untuk Membuka Modal Lahan Eksisting \\
+    $("#openModalEksistingBtn").on("click", function () {
+      $("#filterModalEksisting").modal("show");
+    });
+
+    // Panggil Fungsi untuk Memuat Data GeoJSON Saat Halaman Dimuat
+    $(document).ready(function () {
+      $("#goToBtnEksisting").prop("disabled", true); // Tombol dinonaktifkan secara default
+      loadEksistingData();
+    });
+
+    //KOMODITAS
+    $(document).ready(function () {
+      // Initialize Select2 with proper dropdownParent
+      $("#komoditasSelect, #kabupatenSelect, #desaSelect").select2({
+        dropdownParent: $("#filterModal"),
+      });
+
+      // Populate dropdowns (example data)
+      $("#komoditasSelect").append(new Option("Komoditas"));
+      $("#kabupatenSelect").append(new Option("Kabupaten/Kota"));
+      $("#desaSelect").append(new Option("Desa/Kelurahan"));
+
+      // Enable Go To button when Desa/Kelurahan is selected
+      $("#desaSelect").on("change", function () {
+        $("#goToBtn").prop("disabled", !$(this).val());
+      });
+    });
+
+    /* Initial Map */
+    var map = L.map("map").setView([-0.0423903, 116.7512106], 7); //lat, long, zoom
+
+    /* Tile Basemap */
+    var basemap = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: '<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    });
+    var basemap2 = L.tileLayer("https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}", {
+      maxZoom: 20,
+      subdomains: ["mt0", "mt1", "mt2", "mt3"],
+      attribution: "Google Satellite",
+    });
+    var basemap3 = L.tileLayer("http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}", {
+      maxZoom: 20,
+      subdomains: ["mt0", "mt1", "mt2", "mt3"],
+    });
+    var lokasi1 = L.tileLayer("tiles/Lokasi1/{z}/{x}/{y}.png", {
+      minZoom: 5,
+      maxZoom: 20,
+      tms: false,
+    });
+    var lokasi2 = L.tileLayer("tiles/Lokasi2/{z}/{x}/{y}.png", {
+      minZoom: 5,
+      maxZoom: 20,
+      tms: false,
+    });
+    var Lokasi3 = L.tileLayer("tiles/Lokasi3/{z}/{x}/{y}.png", {
+      minZoom: 5,
+      maxZoom: 20,
+      tms: false,
+    });
+    var Lokasi4 = L.tileLayer("tiles/Lokasi4/{z}/{x}/{y}.png", {
+      minZoom: 5,
+      maxZoom: 20,
+      tms: false,
+    });
+    var Lokasi5 = L.tileLayer("tiles/Lokasi5/{z}/{x}/{y}.png", {
+      minZoom: 5,
+      maxZoom: 20,
+      tms: false,
+    });
+    var Lokasi6 = L.tileLayer("tiles/Lokasi6/{z}/{x}/{y}.png", {
+      minZoom: 5,
+      maxZoom: 20,
+      tms: false,
+    });
+    var lokasi7 = L.tileLayer("tiles/lokasi7/{z}/{x}/{y}.png", {
+      minZoom: 5,
+      maxZoom: 20,
+      tms: false,
+    });
+    var lokasi8 = L.tileLayer("tiles/lokasi8/{z}/{x}/{y}.png", {
+      minZoom: 5,
+      maxZoom: 20,
+      tms: false,
+    });
+    var lokasi9 = L.tileLayer("tiles/lokasi9/{z}/{x}/{y}.png", {
+      minZoom: 5,
+      maxZoom: 20,
+      tms: false,
+    });
+    var lokasi10 = L.tileLayer("tiles/lokasi10/{z}/{x}/{y}.png", {
+      minZoom: 5,
+      maxZoom: 20,
+      tms: false,
+    });
+    var lokasi11 = L.tileLayer("tiles/lokasi11/{z}/{x}/{y}.png", {
+      minZoom: 5,
+      maxZoom: 20,
+      tms: false,
+    });
+    var lokasi12 = L.tileLayer("tiles/lokasi12/{z}/{x}/{y}.png", {
+      minZoom: 5,
+      maxZoom: 20,
+      tms: false,
+    });
+    var lokasi13 = L.tileLayer("tiles/lokasi13/{z}/{x}/{y}.png", {
+      minZoom: 5,
+      maxZoom: 20,
+      tms: false,
+    });
+    var lokasi14 = L.tileLayer("tiles/lokasi14/{z}/{x}/{y}.png", {
+      minZoom: 5,
+      maxZoom: 20,
+      tms: false,
+    });
+    var lokasi15 = L.tileLayer("tiles/lokasi15/{z}/{x}/{y}.png", {
+      minZoom: 5,
+      maxZoom: 20,
+      tms: false,
+    });
+    basemap3.addTo(map);
+
+    /* Cari Lokasi */
+    var geojsonData; // Untuk menyimpan data GeoJSON
+    var geojsonLayer; // Layer untuk data GeoJSON
+
+    // Fungsi untuk memuat file GeoJSON
+    function loadGeoJSON(url) {
+      return fetch(url)
+        .then((response) => response.json())
+        .then((data) => {
+          geojsonData = data; // Simpan data GeoJSON
+          if (geojsonLayer) {
+            map.removeLayer(geojsonLayer); // Reset layer jika sebelumnya sudah dimuat
+          }
+          geojsonLayer = L.geoJSON(data, {
+            style: function (feature) {
+              return {
+                color: "#ffffff",
+                weight: 0,
+                fillColor: "#ffffff",
+                fillOpacity: 0,
+              };
+            },
+            onEachFeature: function (feature, layer) {
+              //layer.bindPopup(
+              //"<b>Komoditas:</b> " + feature.properties.Komoditas +
+              //"<br><b>Desa/Kelurahan:</b> " + feature.properties.WADMKD +
+              //"<br><b>Kabupaten/Kota:</b> " + feature.properties.WADMKK
+              //);
+            },
+          }).addTo(map);
+          return data;
+        });
+    }
+
+    // Memuat file GeoJSON
+    loadGeoJSON("data/hortik_desa.geojson").then(() => {
+      populateSelect2("#komoditasSelect", [...new Set(geojsonData.features.map((f) => f.properties.Komoditi))]);
+    });
+
+    // Fungsi untuk mengisi dropdown Select2
+    function populateSelect2(id, data) {
+      $(id).empty().append('<option value="">Pilih</option>');
+      data.forEach(function (item) {
+        $(id).append('<option value="' + item + '">' + item + "</option>");
+      });
+      $(id).select2({
+        width: "style",
+        dropdownAutoWidth: true,
+      });
+    }
+
+    // Reset dropdown saat berubah
+    function resetDropdown(...ids) {
+      ids.forEach((id) => {
+        $(id).empty().append('<option value="">Pilih</option>').select2({ width: "style", dropdownAutoWidth: true });
+      });
+    }
+
+    // Event listener untuk dropdown dan tombol Go to
+    $("#komoditasSelect").on("change", function () {
+      var selectedKomoditas = $(this).val();
+      if (selectedKomoditas) {
+        var kabupatenList = [...new Set(geojsonData.features.filter((f) => f.properties.Komoditi === selectedKomoditas).map((f) => f.properties.WADMKK))];
+        populateSelect2("#kabupatenSelect", kabupatenList);
+        resetDropdown("#desaSelect");
+        $("#goToBtn").hide();
+      }
+    });
+
+    $("#kabupatenSelect").on("change", function () {
+      var selectedKomoditas = $("#komoditasSelect").val(); // Ambil komoditas yang dipilih
+      var selectedKabupaten = $(this).val(); // Ambil kabupaten yang dipilih
+      if (selectedKomoditas && selectedKabupaten) {
+        var desaList = [
+          ...new Set(
+            geojsonData.features
+              .filter((f) => f.properties.Komoditi === selectedKomoditas && f.properties.WADMKK === selectedKabupaten) // Pastikan komoditas dan kabupaten cocok
+              .map((f) => f.properties.WADMKD)
+          ),
+        ];
+        populateSelect2("#desaSelect", desaList); // Isi dropdown Desa
+        $("#goToBtn").hide();
+      }
+    });
+
+    $("#desaSelect").on("change", function () {
+      if ($(this).val()) {
+        $("#goToBtn").show();
+      }
+    });
+
+    $("#goToBtn").on("click", function () {
+      var selectedDesa = $("#desaSelect").val();
+      var selectedFeature = geojsonData.features.find((f) => f.properties.WADMKD === selectedDesa);
+      if (selectedFeature) {
+        var centerX = selectedFeature.properties.Center_X;
+        var centerY = selectedFeature.properties.Center_Y;
+        map.setView([centerY, centerX], 13); // Zoom ke lokasi menggunakan Center_X dan Center_Y
+        //map.openPopup(
+        //"<b>Komoditas:</b> " + selectedFeature.properties.Komoditas +
+        //"<br><b>Desa/Kelurahan:</b> " + selectedFeature.properties.WADMKD +
+        //"<br><b>Kabupaten/Kota:</b> " + selectedFeature.properties.WADMKK,
+        //[centerY, centerX]
+        //);
+        $("#filterModal").modal("hide");
+      }
+    });
+
+    // Tampilkan modal filter
+    $("#openModalBtn").on("click", function () {
+      $("#filterModal").modal("show");
+    });
+
+    // Inisialisasi Select2
+    $(document).ready(function () {
+      // Initialize Select2 with proper dropdownParent within the modal
+      $("#komoditasSelect, #kabupatenSelect, #desaSelect").select2({
+        dropdownParent: $("#filterModal"), // Attach dropdown to modal
+        width: "resolve", // Ensure dropdown width fits the container
+      });
+
+      // Example data population
+      $("#komoditasSelect").append(new Option("Pilih Komoditas"));
+      $("#kabupatenSelect").append(new Option("Pilih Kabupaten/Kota"));
+      $("#desaSelect").append(new Option("Pilih Desa/Kelurahan"));
+
+      // Enable "Go To" button when Desa/Kelurahan is selected
+      $("#desaSelect").on("change", function () {
+        $("#goToBtn").prop("disabled", !$(this).val());
+      });
+    });
+
+    let currentScale = 1;
+
+    // Event untuk menampilkan gambar dalam mode full page
+    document.addEventListener("click", function (e) {
+      if (e.target.tagName === "IMG" && e.target.closest(".zoom-container")) {
+        const overlay = document.getElementById("fullscreenOverlay");
+        const fullscreenImage = document.getElementById("fullscreenImage");
+        fullscreenImage.src = e.target.src; // Set gambar yang di-zoom
+        overlay.style.display = "flex"; // Tampilkan overlay
+        currentScale = 1; // Reset tingkat zoom
+        fullscreenImage.style.transform = `scale(${currentScale})`; // Pastikan skala awal
+      }
+    });
+
+    // Event untuk menutup overlay
+    document.getElementById("fullscreenOverlay").addEventListener("click", function () {
+      this.style.display = "none"; // Sembunyikan overlay
+      currentScale = 1; // Reset tingkat zoom
+    });
+
+    // Event untuk menangani zoom in dan zoom out dengan scroll
+    document.getElementById("fullscreenOverlay").addEventListener("wheel", function (e) {
+      e.preventDefault();
+      const fullscreenImage = document.getElementById("fullscreenImage");
+
+      // Zoom in atau zoom out berdasarkan arah scroll
+      if (e.deltaY < 0) {
+        currentScale += 0.1; // Zoom in
+      } else {
+        currentScale = Math.max(1, currentScale - 0.1); // Zoom out (minimal 1x)
+      }
+
+      fullscreenImage.style.transform = `scale(${currentScale})`;
+    });
+
+    // Tombol keyboard untuk zoom in dan zoom out
+    document.addEventListener("keydown", function (e) {
+      const overlay = document.getElementById("fullscreenOverlay");
+      if (overlay.style.display === "flex") {
+        const fullscreenImage = document.getElementById("fullscreenImage");
+
+        if (e.key === "+") {
+          currentScale += 0.1; // Zoom in
+        } else if (e.key === "-") {
+          currentScale = Math.max(1, currentScale - 0.1); // Zoom out
+        }
+
+        fullscreenImage.style.transform = `scale(${currentScale})`;
+      }
+    });
+
+    /* Batas Administrasi */
+    map.createPane("pane_admin");
+    map.getPane("pane_admin").style.zIndex = 400;
+
+    /* Style polygon */
+    var admin = L.geoJson(null, {
+      pane: "pane_admin",
+      style: function (feature) {
+        return {
+          fillColor: "0", //Warna tengah polygon
+          fillOpacity: 0, //Transparansi tengah polygon
+          color: "#808080", //Warna garis tepi polygon
+          weight: 2, //Tebal garis tepi polygon
+          opacity: 1, //Transparansi garis tepi polygon
+        };
+      },
+
+      /* Highlight & Popup */
+      onEachFeature: function (feature, layer) {
+        layer.on({
+          mouseover: function (e) {
+            var layer = e.target;
+            layer.setStyle({
+              weight: 2,
+              color: "#00FFFF",
+              opacity: 1,
+              fillColor: "",
+              fillOpacity: 0,
+            });
+          },
+          mouseout: function (e) {
+            admin.resetStyle(e.target);
+            map.closePopup();
+          },
+          click: function (e) {
+            var content =
+              "<table class='table table-striped table-bordered'>" +
+              "<tr><th>Kabupaten/Kota</th><td>" +
+              feature.properties.WADMKK +
+              "</td></tr>" +
+              "<tr><th>Provinsi</th><td>" +
+              feature.properties.Provinsi +
+              "</td></tr>" +
+              "<tr><th>Luas Wilayah</th><td>" +
+              feature.properties.Luas +
+              " km2" +
+              "</td></tr>" +
+              "</table>";
+            $("#feature-title").html("Detil Informasi Wilayah "); //Judul Modal
+            $("#feature-info").html(content); //Isi Modal
+            $("#featureModal").modal("show"); //Menampilkan featureModal
+          },
+        });
+      },
+    });
+    $.getJSON("data/admin.geojson", function (data) {
+      admin.addData(data);
+      map.addLayer(admin);
+    });
+
+    /* Batas Kecamatan */
+    map.createPane("pane_kecamatan");
+    map.getPane("pane_kecamatan").style.zIndex = 400;
+
+    /* Style polygon */
+    var adminkecamatan = L.geoJson(null, {
+      pane: "pane_kecamatan",
+      style: function (feature) {
+        return {
+          fillColor: "#808080", //Warna tengah polygon
+          fillOpacity: 0, //Transparansi tengah polygon
+          bordercolor: "##000", //Warna garis tepi polygon
+          weight: 1, //Tebal garis tepi polygon
+          opacity: 1, //Transparansi garis tepi polygon
+        };
+      },
+
+      /* Highlight & Popup */
+      onEachFeature: function (feature, layer) {
+        layer.on({
+          mouseover: function (e) {
+            var layer = e.target;
+            layer.setStyle({
+              weight: 2,
+              color: "#00FFFF",
+              opacity: 1,
+              //fillColor: "",
+              fillOpacity: 0,
+            });
+          },
+          mouseout: function (e) {
+            adminkecamatan.resetStyle(e.target);
+            map.closePopup();
+          },
+          click: function (e) {
+            var content =
+              "<table class='table table-striped table-bordered'>" +
+              "<tr><th>Kecamatan</th><td>" +
+              feature.properties.WADMKC +
+              "</td></tr>" +
+              "<tr><th>Luas Wilayah</th><td>" +
+              feature.properties.LUAS +
+              " km2" +
+              "</td></tr>" +
+              "</table>";
+            $("#feature-title").html("Detil Informasi Wilayah "); //Judul Modal
+            $("#feature-info").html(content); //Isi Modal
+            $("#featureModal").modal("show"); //Menampilkan featureModal
+          },
+        });
+      },
+    });
+    $.getJSON("data/admin_kecamatan.geojson", function (data) {
+      adminkecamatan.addData(data);
+      //map.addLayer(adminkecamatan);
+    });
+
+    /* Batas Desa */
+    map.createPane("pane_desa");
+    map.getPane("pane_desa").style.zIndex = 400;
+
+    /* Style polygon */
+    var admindesa = L.geoJson(null, {
+      pane: "pane_desa",
+      style: function (feature) {
+        return {
+          fillColor: "#808080", //Warna tengah polygon
+          fillOpacity: 0, //Transparansi tengah polygon
+          color: "#e31a1c", //Warna garis tepi polygon
+          weight: 3, //Tebal garis tepi polygon
+          opacity: 1, //Transparansi garis tepi polygon
+        };
+      },
+
+      /* Highlight & Popup */
+      onEachFeature: function (feature, layer) {
+        layer.on({
+          mouseover: function (e) {
+            var layer = e.target;
+            layer.setStyle({
+              weight: 2,
+              color: "#00FFFF",
+              opacity: 1,
+              //fillColor: "",
+              fillOpacity: 0,
+            });
+          },
+          mouseout: function (e) {
+            admindesa.resetStyle(e.target);
+            map.closePopup();
+          },
+          click: function (e) {
+            var content =
+              "<table class='table table-striped table-bordered'>" +
+              "<tr><th>Desa</th><td>" + feature.properties.WADMKD + "</td></tr>" +
+              "<tr><th>Luas Wilayah</th><td>" + feature.properties.Luas + " km2" + "</td></tr>" +
+              "</table>";
+            $("#feature-title").html("Detil Informasi Wilayah "); //Judul Modal
+            $("#feature-info").html(content); //Isi Modal
+            $("#featureModal").modal("show"); //Menampilkan featureModal
+          },
+        });
+      },
+    });
+    $.getJSON("data/lokasi_survey.geojson", function (data) {
+      admindesa.addData(data);
+      //map.addLayer(admindesa);
+    });
+
+    /* RTRW PERTANIAN */
+    map.createPane("pane_rtrwpertanian");
+    map.getPane("pane_rtrwpertanian").style.zIndex = 400;
+
+    /* Style polygon */
+    var rtrwpertanian = L.geoJson(null, {
+      pane: "pane_rtrwpertanian",
+      style: function (feature) {
+        return {
+          fillColor: "#808080", //Warna tengah polygon
+          fillOpacity: 0, //Transparansi tengah polygon
+          color: "#FFA500", //Warna garis tepi polygon
+          weight: 1, //Tebal garis tepi polygon
+          opacity: 1, //Transparansi garis tepi polygon
+        };
+      },
+
+      /* Highlight & Popup */
+      onEachFeature: function (feature, layer) {
+        layer.on({
+          mouseover: function (e) {
+            var layer = e.target;
+            layer.setStyle({
+              weight: 2,
+              color: "#00FFFF",
+              opacity: 1,
+              //fillColor: "",
+              fillOpacity: 0,
+            });
+          },
+          mouseout: function (e) {
+            rtrwpertanian.resetStyle(e.target);
+            map.closePopup();
+          },
+          click: function (e) {
+            var content =
+              "<table class='table table-striped table-bordered'>" +
+              "<tr><th>Nama Objek</th><td>" + feature.properties.NAMOBJ + "</td></tr>" +
+              "<tr><th>Kabupaten/Kota</th><td>" + feature.properties.WADMKK + "</td></tr>" +
+              "<tr><th>Kawasan Rawan Bencana</th><td>" + feature.properties.KRB_03 + "</td></tr>" +
+              "<tr><th>Revisi</th><td>" + feature.properties.REMARK + "</td></tr>" +
+              "<tr><th>Luas</th><td>" + feature.properties.LUASHA + " ha" + "</td></tr>" +
+              "</table>";
+            $("#feature-title").html("Detil Rencana Tata Ruang Wilayah Kawasan Pertanian "); //Judul Modal
+            $("#feature-info").html(content); //Isi Modal
+            $("#featureModal").modal("show"); //Menampilkan featureModal
+          },
+        });
+      },
+    });
+    $.getJSON("data/kawasan_pertanian.geojson", function (data) {
+      rtrwpertanian.addData(data);
+      //map.addLayer(rtrwpertanian);
+    });
+
+    /* AREA KONSERVASI */
+    map.createPane("pane_areakonservasi");
+    map.getPane("pane_areakonservasi").style.zIndex = 400;
+
+    /* Style polygon */
+    var areakonservasi = L.geoJson(null, {
+      pane: "pane_areakonservasi",
+      style: function (feature) {
+        return {
+          fillColor: "#808080", //Warna tengah polygon
+          fillOpacity: 0, //Transparansi tengah polygon
+          color: "#90EE90", //Warna garis tepi polygon
+          weight: 1, //Tebal garis tepi polygon
+          opacity: 1, //Transparansi garis tepi polygon
+        };
+      },
+
+      /* Highlight & Popup */
+      onEachFeature: function (feature, layer) {
+        layer.on({
+          mouseover: function (e) {
+            var layer = e.target;
+            layer.setStyle({
+              weight: 2,
+              color: "#00FFFF",
+              opacity: 1,
+              //fillColor: "",
+              fillOpacity: 0,
+            });
+          },
+          mouseout: function (e) {
+            areakonservasi.resetStyle(e.target);
+            map.closePopup();
+          },
+          click: function (e) {
+            var content =
+              "<table class='table table-striped table-bordered'>" +
+              "<tr><th>Kabupaten/Kota</th><td>" + feature.properties.KABKOT + "</td></tr>" +
+              "<tr><th>Lahan</th><td>" + feature.properties.ST_LAHAN + "</td></tr>" +
+              "<tr><th>SK 718</th><td>" + feature.properties.SK_718 + "</td></tr>" +
+              "<tr><th>Luas</th><td>" + feature.properties.LUAS_HA + " ha" + "</td></tr>" +
+              "<tr><th>Sumber</th><td>" + feature.properties.SUMBER + "</td></tr>" +
+              "</table>";
+            $("#feature-title").html("Detil Area berNilai Konservasi Tinggi"); //Judul Modal
+            $("#feature-info").html(content); //Isi Modal
+            $("#featureModal").modal("show"); //Menampilkan featureModal
+          },
+        });
+      },
+    });
+    $.getJSON("data/ANKT.geojson", function (data) {
+      areakonservasi.addData(data);
+      //map.addLayer(rtrwkonservasi);
+    });
+
+    /* IUP PERKEBUNAN */
+    map.createPane("pane_iupkebun");
+    map.getPane("pane_iupkebun").style.zIndex = 400;
+
+    /* Style polygon */
+    var iupkebun = L.geoJson(null, {
+      pane: "pane_iupkebun",
+      style: function (feature) {
+        return {
+          fillColor: "#808080", //Warna tengah polygon
+          fillOpacity: 0, //Transparansi tengah polygon
+          color: "#006400", //Warna garis tepi polygon
+          weight: 2, //Tebal garis tepi polygon
+          opacity: 1, //Transparansi garis tepi polygon
+        };
+      },
+
+      /* Highlight & Popup */
+      onEachFeature: function (feature, layer) {
+        layer.on({
+          mouseover: function (e) {
+            var layer = e.target;
+            layer.setStyle({
+              weight: 2,
+              color: "#00FFFF",
+              opacity: 1,
+              //fillColor: "",
+              fillOpacity: 0,
+            });
+          },
+          mouseout: function (e) {
+            iupkebun.resetStyle(e.target);
+            map.closePopup();
+          },
+          click: function (e) {
+            var content =
+              "<table class='table table-striped table-bordered'>" +
+              "<tr><th>Nama Perusahaan</th><td>" + feature.properties.Nama_Psrh + "</td></tr>" +
+              "<tr><th>Penerbit</th><td>" + feature.properties.Penerbit + "</td></tr>" +
+              "<tr><th>Status</th><td>" + feature.properties.Status + "</td></tr>" +
+              "<tr><th>Kabupaten/Kota</th><td>" + feature.properties.Kabupaten + "</td></tr>" +
+              "<tr><th>Sumber</th><td>" + feature.properties.Sumber + "</td></tr>" +
+              "</table>";
+            $("#feature-title").html("Detil Izin Usaha Perkebunan"); //Judul Modal
+            $("#feature-info").html(content); //Isi Modal
+            $("#featureModal").modal("show"); //Menampilkan featureModal
+          },
+        });
+      },
+    });
+    $.getJSON("data/iup_perkebunan.geojson", function (data) {
+      iupkebun.addData(data);
+      //map.addLayer(rtrwhutan);
+    });
+
+    /* PERIZINAN BERUSAHA PEMANFAATAN HUTAN */
+    map.createPane("pane_pbph");
+    map.getPane("pane_pbph").style.zIndex = 400;
+
+    /* Style polygon */
+    var pbph = L.geoJson(null, {
+      pane: "pane_pbph",
+      style: function (feature) {
+        return {
+          fillColor: "#808080", //Warna tengah polygon
+          fillOpacity: 0, //Transparansi tengah polygon
+          color: "#895129", //Warna garis tepi polygon
+          weight: 2, //Tebal garis tepi polygon
+          opacity: 1, //Transparansi garis tepi polygon
+        };
+      },
+
+      /* Highlight & Popup */
+      onEachFeature: function (feature, layer) {
+        layer.on({
+          mouseover: function (e) {
+            var layer = e.target;
+            layer.setStyle({
+              weight: 2,
+              color: "#00FFFF",
+              opacity: 1,
+              //fillColor: "",
+              fillOpacity: 0,
+            });
+          },
+          mouseout: function (e) {
+            pbph.resetStyle(e.target);
+            map.closePopup();
+          },
+          click: function (e) {
+            var content =
+              "<table class='table table-striped table-bordered'>" +
+              "<tr><th>Nama Objek</th><td>" + feature.properties.NAMAOBJ + "</td></tr>" +
+              "<tr><th>Jenis</th><td>" + feature.properties.JENIS + "</td></tr>" +
+              "<tr><th>Kegiatan</th><td>" + feature.properties.KEGIATAN + "</td></tr>" +
+              "<tr><th>Status</th><td>" + feature.properties.Stat_Izin + "</td></tr>" +
+              "<tr><th>Luas</th><td>" + feature.properties.LuasHA + " ha" + "</td></tr>" +
+              "</table>";
+            $("#feature-title").html("Detil Perizinan Berusaha Pemanfaatan Hutan "); //Judul Modal
+            $("#feature-info").html(content); //Isi Modal
+            $("#featureModal").modal("show"); //Menampilkan featureModal
+          },
+        });
+      },
+    });
+    $.getJSON("data/PBH_2023.geojson", function (data) {
+      pbph.addData(data);
+      //map.addLayer(pbph);
+    });
+
+    /* Komoditas Tentatif */
+    map.createPane("pane_tentatif");
+    map.getPane("pane_tentatif").style.zIndex = 400;
+    var tentatifColors = { "Bawang Merah": "#e8718d", "Nanas": "#fdbf6f", "Pepaya": "#ff7f00", "Pisang": "#ffff00", "Cabe Besar": "#ff0000", "Cabe Rawit": "#d5f32d" };
+    var tentatif = L.geoJson(null, {
+      pane: "pane_tentatif",
+
+      /* Style polygon */
+      style: function (feature) {
+        //Fungsi style polygon
+        return {
+          color: tentatifColors[feature.properties.Komoditi],
+          bordercolor: "#000000", //Warna garis tepi polygon
+          weight: 5, //Tebal garis tepi polygon
+          opacity: 1, //Transparansi garis tepi polygon
+        };
+      },
+
+      /* Highlight & Popup */
+      onEachFeature: function (feature, layer) {
+        layer.on({
+          mouseover: function (e) {
+            var layer = e.target;
+            layer.setStyle({
+              weight: 2,
+              color: "#00FFFF",
+              opacity: 1,
+              fillColor: "white",
+              fillOpacity: 0,
+            });
+          },
+          mouseout: function (e) {
+            tentatif.resetStyle(e.target);
+            map.closePopup();
+          },
+          click: function (e) {
+            var content =
+              "<table class='table table-striped table-bordered'>" +
+              "<tr><th>Kabupaten</th><td>" +
+              feature.properties.WADMKK +
+              "</td></tr>" +
+              "<tr><th>Komoditi</th><td>" +
+              feature.properties.Komoditi +
+              "</td></tr>" +
+              "<tr><th>Produksi</th><td>" +
+              feature.properties.PRD_2023 +
+              " ton" +
+              "</td></tr>" +
+              "<tr><th>Produktivitas</th><td>" +
+              feature.properties.Provitas +
+              " ton/ha" +
+              "</td></tr>" +
+              "<tr><th>Luas Lahan</th><td>" +
+              feature.properties.L_Lahan +
+              " ha" +
+              "</td></tr>" +
+              "<tr><th>Luas Panen</th><td>" +
+              feature.properties.L_Panen +
+              " ha" +
+              "</td></tr>" +
+              "</table>";
+            $("#feature-title").html("Detil Lahan Komoditi " + feature.properties.Komoditi); //Judul Modal
+            $("#feature-info").html(content); //Isi Modal
+            $("#featureModal").modal("show"); //Menampilkan featureModal
+          },
+        });
+      },
+    });
+    $.getJSON("data/data_hortik_skalaprov.geojson", function (data) {
+      tentatif.addData(data);
+    });
+
+    /* Poktan Balikpapan */
+    var balikpapan = L.geoJson(null, {
+      pointToLayer: function (feature, latlng) {
+        return L.marker(latlng, {
+          icon: L.icon({
+            iconUrl: "images/city-marker.png",
+            iconSize: [16, 16],
+            iconAnchor: [14, 28],
+            popupAnchor: [0, -20],
+            tooltipAnchor: [0, -24],
+          }),
+        });
+      },
+
+      // Highlight & Popup
+      onEachFeature: function (feature, layer) {
+        if (feature.properties) {
+          var content =
+            "<table class='table table-striped table-bordered'>" +
+            "<tr><th>Nama Poktan</th><td>" +
+            feature.properties.Poktan +
+            "</td></tr>" +
+            "<tr><th>Desa</th><td>" +
+            feature.properties.Desa +
+            "</td></tr>" +
+            "<tr><th>Kecamatan</th><td>" +
+            feature.properties.Kecamatan +
+            "</td></tr>" +
+            "<tr><th>Nama Gapoktan</th><td>" +
+            feature.properties.Gapoktan +
+            "</td></tr>" +
+            "</table>";
+          layer.on({
+            click: function (e) {
+              $("#feature-title").html("Informasi Kelompok Tani"); //Judul Modal
+              $("#feature-info").html(content); //Isi Modal
+              $("#featureModal").modal("show"); //Menampilkan featureModal
+            },
+          });
+        }
+      },
+    });
+    $.getJSON("data/poktan_balikpapan.geojson", function (data) {
+      balikpapan.addData(data);
+      //map.addLayer(balikpapan);
+    });
+
+    /* Poktan Berau */
+    var berau = L.geoJson(null, {
+      pointToLayer: function (feature, latlng) {
+        return L.marker(latlng, {
+          icon: L.icon({
+            iconUrl: "images/city-marker.png",
+            iconSize: [16, 16],
+            iconAnchor: [14, 28],
+            popupAnchor: [0, -20],
+            tooltipAnchor: [0, -24],
+          }),
+        });
+      },
+
+      // Highlight & Popup
+      onEachFeature: function (feature, layer) {
+        if (feature.properties) {
+          var content =
+            "<table class='table table-striped table-bordered'>" +
+            "<tr><th>Nama Poktan</th><td>" +
+            feature.properties.Poktan +
+            "</td></tr>" +
+            "<tr><th>Desa</th><td>" +
+            feature.properties.Desa +
+            "</td></tr>" +
+            "<tr><th>Kecamatan</th><td>" +
+            feature.properties.Kecamatan +
+            "</td></tr>" +
+            "<tr><th>Nama Gapoktan</th><td>" +
+            feature.properties.Gapoktan +
+            "</td></tr>" +
+            "</table>";
+          layer.on({
+            click: function (e) {
+              $("#feature-title").html("Informasi Kelompok Tani"); //Judul Modal
+              $("#feature-info").html(content); //Isi Modal
+              $("#featureModal").modal("show"); //Menampilkan featureModal
+            },
+          });
+        }
+      },
+    });
+
+    $.getJSON("data/poktan_berau.geojson", function (data) {
+      berau.addData(data);
+      //map.addLayer(berau);
+    });
+
+    /* Poktan Bontang */
+    var bontang = L.geoJson(null, {
+      pointToLayer: function (feature, latlng) {
+        return L.marker(latlng, {
+          icon: L.icon({
+            iconUrl: "images/city-marker.png",
+            iconSize: [16, 16],
+            iconAnchor: [14, 28],
+            popupAnchor: [0, -20],
+            tooltipAnchor: [0, -24],
+          }),
+        });
+      },
+
+      // Highlight & Popup
+      onEachFeature: function (feature, layer) {
+        if (feature.properties) {
+          var content =
+            "<table class='table table-striped table-bordered'>" +
+            "<tr><th>Nama Poktan</th><td>" +
+            feature.properties.Poktan +
+            "</td></tr>" +
+            "<tr><th>Desa</th><td>" +
+            feature.properties.Desa +
+            "</td></tr>" +
+            "<tr><th>Kecamatan</th><td>" +
+            feature.properties.Kecamatan +
+            "</td></tr>" +
+            "<tr><th>Nama Gapoktan</th><td>" +
+            feature.properties.Gapoktan +
+            "</td></tr>" +
+            "</table>";
+          layer.on({
+            click: function (e) {
+              $("#feature-title").html("Informasi Kelompok Tani"); //Judul Modal
+              $("#feature-info").html(content); //Isi Modal
+              $("#featureModal").modal("show"); //Menampilkan featureModal
+            },
+          });
+        }
+      },
+    });
+
+    $.getJSON("data/poktan_bontang.geojson", function (data) {
+      bontang.addData(data);
+      //map.addLayer(bontang);
+    });
+
+    /* Poktan Kubar */
+    var kubar = L.geoJson(null, {
+      pointToLayer: function (feature, latlng) {
+        return L.marker(latlng, {
+          icon: L.icon({
+            iconUrl: "images/city-marker.png",
+            iconSize: [16, 16],
+            iconAnchor: [14, 28],
+            popupAnchor: [0, -20],
+            tooltipAnchor: [0, -24],
+          }),
+        });
+      },
+
+      // Highlight & Popup
+      onEachFeature: function (feature, layer) {
+        if (feature.properties) {
+          var content =
+            "<table class='table table-striped table-bordered'>" +
+            "<tr><th>Nama Poktan</th><td>" +
+            feature.properties.Poktan +
+            "</td></tr>" +
+            "<tr><th>Desa</th><td>" +
+            feature.properties.Desa +
+            "</td></tr>" +
+            "<tr><th>Kecamatan</th><td>" +
+            feature.properties.Kecamatan +
+            "</td></tr>" +
+            "<tr><th>Nama Gapoktan</th><td>" +
+            feature.properties.Gapoktan +
+            "</td></tr>" +
+            "</table>";
+          layer.on({
+            click: function (e) {
+              $("#feature-title").html("Informasi Kelompok Tani"); //Judul Modal
+              $("#feature-info").html(content); //Isi Modal
+              $("#featureModal").modal("show"); //Menampilkan featureModal
+            },
+          });
+        }
+      },
+    });
+
+    $.getJSON("data/poktan_kubar.geojson", function (data) {
+      kubar.addData(data);
+      //map.addLayer(kubar);
+    });
+
+    /* Poktan Kutim */
+    var kutim = L.geoJson(null, {
+      pointToLayer: function (feature, latlng) {
+        return L.marker(latlng, {
+          icon: L.icon({
+            iconUrl: "images/city-marker.png",
+            iconSize: [16, 16],
+            iconAnchor: [14, 28],
+            popupAnchor: [0, -20],
+            tooltipAnchor: [0, -24],
+          }),
+        });
+      },
+
+      // Highlight & Popup
+      onEachFeature: function (feature, layer) {
+        if (feature.properties) {
+          var content =
+            "<table class='table table-striped table-bordered'>" +
+            "<tr><th>Nama Poktan</th><td>" +
+            feature.properties.Poktan +
+            "</td></tr>" +
+            "<tr><th>Desa</th><td>" +
+            feature.properties.Desa +
+            "</td></tr>" +
+            "<tr><th>Kecamatan</th><td>" +
+            feature.properties.Kecamatan +
+            "</td></tr>" +
+            "<tr><th>Nama Gapoktan</th><td>" +
+            feature.properties.Gapoktan +
+            "</td></tr>" +
+            "</table>";
+          layer.on({
+            click: function (e) {
+              $("#feature-title").html("Informasi Kelompok Tani"); //Judul Modal
+              $("#feature-info").html(content); //Isi Modal
+              $("#featureModal").modal("show"); //Menampilkan featureModal
+            },
+          });
+        }
+      },
+    });
+
+    $.getJSON("data/poktan_kutim.geojson", function (data) {
+      kutim.addData(data);
+      //map.addLayer(kutim);
+    });
+
+    /* Poktan Mahulu */
+    var mahulu = L.geoJson(null, {
+      pointToLayer: function (feature, latlng) {
+        return L.marker(latlng, {
+          icon: L.icon({
+            iconUrl: "images/city-marker.png",
+            iconSize: [16, 16],
+            iconAnchor: [14, 28],
+            popupAnchor: [0, -20],
+            tooltipAnchor: [0, -24],
+          }),
+        });
+      },
+
+      // Highlight & Popup
+      onEachFeature: function (feature, layer) {
+        if (feature.properties) {
+          var content =
+            "<table class='table table-striped table-bordered'>" +
+            "<tr><th>Nama Poktan</th><td>" +
+            feature.properties.Poktan +
+            "</td></tr>" +
+            "<tr><th>Desa</th><td>" +
+            feature.properties.Desa +
+            "</td></tr>" +
+            "<tr><th>Kecamatan</th><td>" +
+            feature.properties.Kecamatan +
+            "</td></tr>" +
+            "<tr><th>Nama Gapoktan</th><td>" +
+            feature.properties.Gapoktan +
+            "</td></tr>" +
+            "</table>";
+          layer.on({
+            click: function (e) {
+              $("#feature-title").html("Informasi Kelompok Tani"); //Judul Modal
+              $("#feature-info").html(content); //Isi Modal
+              $("#featureModal").modal("show"); //Menampilkan featureModal
+            },
+          });
+        }
+      },
+    });
+
+    $.getJSON("data/poktan_mahulu.geojson", function (data) {
+      mahulu.addData(data);
+      //map.addLayer(mahulu);
+    });
+
+    /* Poktan Paser */
+    var paser = L.geoJson(null, {
+      pointToLayer: function (feature, latlng) {
+        return L.marker(latlng, {
+          icon: L.icon({
+            iconUrl: "images/city-marker.png",
+            iconSize: [16, 16],
+            iconAnchor: [14, 28],
+            popupAnchor: [0, -20],
+            tooltipAnchor: [0, -24],
+          }),
+        });
+      },
+
+      // Highlight & Popup
+      onEachFeature: function (feature, layer) {
+        if (feature.properties) {
+          var content =
+            "<table class='table table-striped table-bordered'>" +
+            "<tr><th>Nama Poktan</th><td>" +
+            feature.properties.Poktan +
+            "</td></tr>" +
+            "<tr><th>Desa</th><td>" +
+            feature.properties.Desa +
+            "</td></tr>" +
+            "<tr><th>Kecamatan</th><td>" +
+            feature.properties.Kecamatan +
+            "</td></tr>" +
+            "<tr><th>Nama Gapoktan</th><td>" +
+            feature.properties.Gapoktan +
+            "</td></tr>" +
+            "</table>";
+          layer.on({
+            click: function (e) {
+              $("#feature-title").html("Informasi Kelompok Tani"); //Judul Modal
+              $("#feature-info").html(content); //Isi Modal
+              $("#featureModal").modal("show"); //Menampilkan featureModal
+            },
+          });
+        }
+      },
+    });
+
+    $.getJSON("data/poktan_paser.geojson", function (data) {
+      paser.addData(data);
+      //map.addLayer(paser);
+    });
+
+    /* Poktan Penajam Paser Utara */
+    var penajam = L.geoJson(null, {
+      pointToLayer: function (feature, latlng) {
+        return L.marker(latlng, {
+          icon: L.icon({
+            iconUrl: "images/city-marker.png",
+            iconSize: [16, 16],
+            iconAnchor: [14, 28],
+            popupAnchor: [0, -20],
+            tooltipAnchor: [0, -24],
+          }),
+        });
+      },
+
+      // Highlight & Popup
+      onEachFeature: function (feature, layer) {
+        if (feature.properties) {
+          var content =
+            "<table class='table table-striped table-bordered'>" +
+            "<tr><th>Nama Poktan</th><td>" +
+            feature.properties.Poktan +
+            "</td></tr>" +
+            "<tr><th>Desa</th><td>" +
+            feature.properties.Desa +
+            "</td></tr>" +
+            "<tr><th>Kecamatan</th><td>" +
+            feature.properties.Kecamatan +
+            "</td></tr>" +
+            "<tr><th>Nama Gapoktan</th><td>" +
+            feature.properties.Gapoktan +
+            "</td></tr>" +
+            "</table>";
+          layer.on({
+            click: function (e) {
+              $("#feature-title").html("Informasi Kelompok Tani"); //Judul Modal
+              $("#feature-info").html(content); //Isi Modal
+              $("#featureModal").modal("show"); //Menampilkan featureModal
+            },
+          });
+        }
+      },
+    });
+
+    $.getJSON("data/poktan_penajam.geojson", function (data) {
+      penajam.addData(data);
+      //map.addLayer(penajam);
+    });
+
+
+    /* Poktan Nipahbaru */
+    var nipahbaru = L.geoJson(null, {
+      pointToLayer: function (feature, latlng) {
+        return L.marker(latlng, {
+          icon: L.icon({
+            iconUrl: "images/city-marker.png",
+            iconSize: [16, 16],
+            iconAnchor: [14, 28],
+            popupAnchor: [0, -20],
+            tooltipAnchor: [0, -24],
+          }),
+        });
+      },
+
+      // Highlight & Popup
+      onEachFeature: function (feature, layer) {
+        if (feature.properties) {
+          var content =
+            "<table class='table table-striped table-bordered'>" +
+            "<tr><th>Nama Poktan</th><td>" +
+            feature.properties.Poktan +
+            "<tr><th>Status</th><td>" +
+            feature.properties.Status +
+            "</td></tr>" +
+            "<tr><th>Desa</th><td>" +
+            feature.properties.Desa +
+            "</td></tr>" +
+            "<tr><th>Kecamatan</th><td>" +
+            feature.properties.Kecamatan +
+            "</td></tr>" +
+            "<tr><th>Jenis Komoditas</th><td>" +
+            feature.properties.Komoditas +
+            "<tr><th>Luas</th><td>" +
+            feature.properties.Luas +
+            "<tr><th>Pemilik</th><td>" +
+            feature.properties.Pemilik +
+            "<tr><th>Penyuluh</th><td>" +
+            feature.properties.Penyuluh +
+            "<tr><th>Lahan</th><td>" +
+            feature.properties.Lahan +
+            "<tr><th>Milik</th><td>" +
+            feature.properties.Milik +
+            "</td></tr>" +
+            "<tr><th>Nama Gapoktan</th><td>" +
+            feature.properties.Gapoktan +
+            "</td></tr>" +
+            "</table>";
+          layer.on({
+            click: function (e) {
+              $("#feature-title").html("Informasi Kelompok Tani"); //Judul Modal
+              $("#feature-info").html(content); //Isi Modal
+              $("#featureModal").modal("show"); //Menampilkan featureModal
+            },
+          });
+        }
+        // Menambahkan Polygon jika ada
+        if (feature.geometry2 && feature.geometry2.coordinates) {
+          var polygonCoordinates = feature.geometry2.coordinates[0].map(function (coord) {
+            return [coord[1], coord[0]]; // Ubah dari [lon, lat] menjadi [lat, lon]
+          });
+
+          var polygon = L.polygon(polygonCoordinates, { color: 'blue', weight: 2 }).addTo(map);
+          polygon.bindPopup("<b>Polygon Lahan</b>");
+        }
+
+      },
+    });
+
+    $.getJSON("data/poktan_nipahbaru_coba.geojson", function (data) {
+      nipahbaru.addData(data);
+      map.addLayer(nipahbaru);
+    });
+
+
+    /* Hortik Eksisting */
+    map.createPane("pane_eksisting");
+    map.getPane("pane_eksisting").style.zIndex = 400;
+    var eksisting = L.geoJson(null, {
+      pane: "pane_eksisting",
+
+      /* Style polygon */
+      style: function (feature) {
+        //Fungsi style polygon
+        return {
+          fillColor: "#808080", //Warna tengah polygon
+          fillOpacity: 0, //Transparansi tengah polygon
+          color: "#d5f32d", //Warna garis tepi polygon
+          weight: 5, //Tebal garis tepi polygon
+          opacity: 1, //Transparansi garis tepi polygon
+        };
+      },
+
+      /* Highlight & Popup */
+      onEachFeature: function (feature, layer) {
+        layer.on({
+          mouseover: function (e) {
+            var layer = e.target;
+            layer.setStyle({
+              weight: 2,
+              color: "#00FFFF",
+              opacity: 1,
+              fillColor: "white",
+              fillOpacity: 0,
+            });
+          },
+          mouseout: function (e) {
+            eksisting.resetStyle(e.target);
+            map.closePopup();
+          },
+          click: function (e) {
+            var content =
+              "<table class='table table-striped table-bordered'>" +
+              "<tr><th>Komoditas</th><td>" +
+              feature.properties.Komoditas +
+              "</td></tr>" +
+              "<tr><th>Lokasi</th><td>" +
+              feature.properties.Lokasi +
+              "</td></tr>" +
+              "<tr><th>Kabupaten/Kota</th><td>" +
+              feature.properties.WADMKK +
+              "</td></tr>" +
+              "<tr><th>Varietas</th><td>" +
+              feature.properties.Varietas +
+              "</td></tr>" +
+              "<tr><th>Produksi Panen</th><td>" +
+              feature.properties.PRD_Panen +
+              "</td></tr>" +
+              "<tr><th>Frekuensi Panen</th><td>" +
+              feature.properties.Fr_Panen +
+              "</td></tr>" +
+              "<tr><th>Luas</th><td>" +
+              feature.properties.Luas +
+              " ha" +
+              "</td></tr>" +
+              "<tr><th>Pemilik Lahan</th><td>" +
+              feature.properties.Pemilik +
+              "</td></tr>" +
+              "<tr><th>Kelompok Tani</th><td>" +
+              feature.properties.Poktan +
+              "</td></tr>" +
+
+              "<tr>" +
+              "<th>Gambar</th>" +
+              "<td>" +
+              "<div class='zoom-container'>" +
+              "<img src='images/scholarship/" +
+              feature.properties.Gambar_1 + "'width='100'>" +
+              "     " +
+              "<img src='images/scholarship/" +
+              feature.properties.Gambar_2 + "'width='100'>" +
+              "</div>" +
+              "</td>" +
+              "</tr>" +
+              "</table>";
+            $("#feature-title").html("Detil Lahan Komoditi "); //Judul Modal
+            $("#feature-info").html(content); //Isi Modal
+            $("#featureModal").modal("show"); //Menampilkan featureModal
+          },
+        });
+      },
+    });
+    $.getJSON("data/lahan_eksisting.geojson", function (data) {
+      eksisting.addData(data);
+      //map.addLayer(eksisting);
+    });
+
+    /* Jalan Usaha Tani */
+    map.createPane("pane_jut");
+    map.getPane("pane_jut").style.zIndex = 400;
+    var jutColors = { "Jalan Usaha Tani": "#d5f32d" };
+    var jut = L.geoJson(null, {
+      pane: "pane_jut",
+
+      /* Style polygon */
+      style: function (feature) {
+        //Fungsi style polygon
+        return {
+          color: jutColors[feature.properties.Tipe],
+          color: "#e77148", //Warna garis tepi polygon
+          weight: 7, //Tebal garis tepi polygon
+          opacity: 1, //Transparansi garis tepi polygon
+        };
+      },
+
+      /* Highlight & Popup */
+      onEachFeature: function (feature, layer) {
+        layer.on({
+          mouseover: function (e) {
+            var layer = e.target;
+            layer.setStyle({
+              weight: 2,
+              color: "#00FFFF",
+              opacity: 1,
+              fillColor: "white",
+              fillOpacity: 0,
+            });
+          },
+          mouseout: function (e) {
+            jut.resetStyle(e.target);
+            map.closePopup();
+          },
+          click: function (e) {
+            var content =
+              "<table class='table table-striped table-bordered'>" +
+              "<tr><th>Tipe JUT</th><td>" +
+              feature.properties.Tipe +
+              "</td></tr>" +
+              "<tr><th>Kabupaten</th><td>" +
+              feature.properties.WADMKK +
+              "</td></tr>" +
+              "<tr><th>Panjang</th><td>" +
+              feature.properties.Panjang +
+              " Meter " +
+              "</td></tr>" +
+              "</table>";
+            $("#feature-title").html("Detil Jalan Usaha Tani"); //Judul Modal
+            $("#feature-info").html(content); //Isi Modal
+            $("#featureModal").modal("show"); //Menampilkan featureModal
+          },
+        });
+      },
+    });
+    $.getJSON("data/jut.geojson", function (data) {
+      jut.addData(data);
+      //map.addLayer(jut);
+    });
+
+    var baseTree = {
+      label: "Base Layers",
+      children: [
+        { label: "Open Street Map", layer: basemap },
+        { label: "Google Satellite", layer: basemap2 },
+        { label: "Google Hybrid", layer: basemap3 },
+      ],
+    };
+
+    var overlaysTree = {
+      label: " Un/Select all",
+      selectAllCheckbox: "Un/select all",
+      children: [
+        {
+          label: ' <b>Batas Wilayah<b>',
+          selectAllCheckbox: true,
+          children: [
+            { label: " Kabupaten/Kota", layer: admin },
+            { label: " Kecamatan", layer: adminkecamatan },
+            { label: " Desa", layer: admindesa },
+          ],
+        },
+        {
+          label: ' <b>Data Pendukung<b>',
+          selectAllCheckbox: true,
+          children: [
+            { label: " RTRW Kawasan Pertanian", layer: rtrwpertanian },
+            { label: " Area Bernilai Konservasi Tinggi", layer: areakonservasi },
+            { label: " Izin Usaha Perkebunan", layer: iupkebun },
+            { label: " Perizinan Berusaha Pemanfaatan Hutan", layer: pbph },
+          ],
+        },
+        {
+          label: ' <b>Eksisting Lahan<b>',
+          selectAllCheckbox: true,
+          children: [
+            { label: " 1. Bawang Merah - Rintik, Penajam Paser Utara", layer: lokasi10 },
+            { label: " 2. Bawang Merah - Tempakan, Paser", layer: Lokasi6 },
+            { label: " 3. Cabe Rawit - Rantau Panjang, Paser", layer: lokasi8 },
+            { label: " 4. Cabe Rawit - Loa Tebu, Kutai Kartanegara", layer: lokasi1 },
+            { label: " 5. Pisang - Jembayan Ilir, Kutai Kartanegara", layer: lokasi2 },
+            { label: " 6. Nanas - Karya Merdeka, Kutai Kartanegara", layer: Lokasi4 },
+            { label: " 7. Cabe Rawit - Senaken, Paser", layer: lokasi7 },
+            { label: " 8. Cabe Rawit - Long Kali, Paser", layer: lokasi9 },
+            { label: " 9. Pisang - Kerang Dayo, Paser", layer: Lokasi5 },
+            { label: " 10. Pepaya - Manggar Baru, Balikpapan", layer: Lokasi3 },
+            { label: " 11. Cabe Rawit - Babulu, Penajam Paser Utara", layer: lokasi11 },
+            { label: " 12. Nanas - Bantuas, Samarinda", layer: lokasi15 },
+            { label: " 13. Pisang - Kaliorang, Kutai Timur", layer: lokasi14 },
+            { label: " 14. Nanas - Himbah Lestari, Kutai Timur 1", layer: lokasi12 },
+            { label: " 15. Nanas - Himbah Lestari, Kutai Timur 2", layer: lokasi13 },
+          ],
+        },
+        {
+          label: ' <b>Komoditas Hortikultura<b>',
+          selectAllCheckbox: true,
+          children: [
+            { label: " Lahan Tentatif", layer: tentatif },
+            { label: " Lahan Eksisting", layer: eksisting },
+          ],
+        },
+        {
+          label: ' <b>Daftar Kelompok Tani<b>',
+          selectAllCheckbox: true,
+          children: [
+            { label: " Kota Balikpapan", layer: balikpapan },
+            { label: " Kabupaten Berau", layer: berau },
+            { label: " Kota Bontang", layer: bontang },
+            { label: " Kabupaten Kutai Barat", layer: kubar },
+            { label: " Kabupaten Kutai Timur", layer: kutim },
+            { label: " Kabupaten Mahakam Ulu", layer: mahulu },
+            { label: " Kabupaten Paser", layer: paser },
+            { label: " Kabupaten Penajam Paser Utara", layer: penajam },
+          ],
+        },
+        {
+          label: ' <b>Sarana Teknis<b>',
+          selectAllCheckbox: true,
+          children: [
+            { label: " Jalan Usaha Tani", layer: jut },
+          ],
+        }
+      ],
+    };
+
+    var layerControl = L.control.layers.tree(baseTree, overlaysTree, { collapsed: true }).addTo(map);
+
+    //Geolocate//
+    var locateControl = L.control
+      .locate({
+        position: "topleft",
+        drawCircle: true,
+        follow: true,
+        setView: true,
+        keepCurrentZoomLevel: false,
+        markerStyle: {
+          weight: 1,
+          opacity: 0.8,
+          fillOpacity: 0.8,
+        },
+        circleStyle: {
+          weight: 1,
+          clickable: false,
+        },
+        icon: "fa fa-crosshairs",
+        metric: true,
+        strings: {
+          title: "Klik untuk mengetahui lokasimu",
+          popup: "Lokasimu sekarang di sini. Akurasi {distance} {unit}",
+          outsideMapBoundsMsg: "Kamu berada di luar area peta",
+        },
+        locateOptions: {
+          maxZoom: 15,
+          watch: true,
+          enableHighAccuracy: true,
+          maximumAge: 10000,
+          timeout: 10000,
+        },
+      })
+      .addTo(map);
+
+    //measurement//
+    var measureControl = new L.Control.Measure({
+      position: "topleft",
+      primaryLengthUnit: "meters",
+      secondaryLengthUnit: "kilometers",
+      primaryAreaUnit: "hectares",
+      secondaryAreaUnit: "sqmeters",
+      activeColor: "green",
+      completedColor: "blue",
+    });
+    measureControl.addTo(map);
+
+    //posisi mouse//
+    L.control
+      .mousePosition({
+        position: 'bottomleft',
+        separator: ",",
+        prefix: "Koordinat : ",
+      })
+      .addTo(map);
+
+    //skala bar//
+    L.control
+      .scale({
+        maxWidth: 150,
+        imperial: false,
+      })
+      .addTo(map);
+
+  </script>
+</body>
+
+</html>

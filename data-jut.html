@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+	================================================== -->
+  <meta charset="utf-8">
+  <title>JUT - Kaltim</title>
+
+  <!-- Mobile Specific Metas
+	================================================== -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Construction Html5 Template">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="author" content="Themefisher">
+  <meta name="generator" content="Themefisher Educenter HTML Template v1.0">
+
+  <!-- ** Plugins Needed for the Project ** -->
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <!-- themefy-icon -->
+  <link rel="stylesheet" href="plugins/themify-icons/themify-icons.css">
+  <!-- aos -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <!-- venobox popup -->
+  <link rel="stylesheet" href="plugins/venobox/venobox.css">
+  <!-- Fontawesome CSS Library -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+
+  <!-- Main Stylesheet -->
+  <link href="css/style.css" rel="stylesheet">
+
+  <!--Favicon-->
+  <link rel="shortcut icon" href="images/ruhui.png" type="image/x-icon">
+  <link rel="icon" href="images/ruhui.png" type="image/x-icon">
+
+</head>
+
+<body>
+
+  <!-- preloader start -->
+  <div class="preloader">
+    <img src="images/preloader.gif" alt="preloader">
+  </div>
+  <!-- preloader end -->
+
+  <!-- Modal Info -->
+  <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-primary">
+          <h5 class="modal-title" id="exampleModalCenterTitle"><i class="fa fa-exclamation-triangle"></i> Disclaimer</h5>
+        </div>
+        <div class="modal-body">
+          <p>Data spasial yang ditampilkan belum dapat dijadikan acuan dan masih bersifat pengembangan</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Tutup</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End of Modal Info -->
+
+  <!-- navbar -->
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html"><img src="images/Logo.svg" alt="logo"></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav" style="background-color: red;">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html"><i class="fas fa-home"></i> HOME</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="webgis.html"><i class="fas fa-map"></i> GEOSPASIAL</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="data-tabular.html"><i class="fas fa-table"></i> DATA TABULAR</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="galeri.html"><i class="fas fa-images"></i> GALERI</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://webgis.sevenpion.web.id/login"><i class="fas fa-user"></i> LOGIN</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- End of navbar -->
+
+  <!-- page title -->
+  <section class="page-title-section overlay" data-background="images/backgrounds/Yellow.svg">
+    <div class="container">
+      <div class="row">
+    
+          
+        
+      </div>
+    </div>
+  </section>
+  <!-- /page title -->
+  <br>
+
+  <!-- INFORMASI TABEL -->
+  <section class="container">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title text-center">Data Jalan Usaha Tani</h3>
+        <p class="card-text">Jalan Usaha Tani merupakan Prasarana Transportasi pada Kawasan Pertanian untuk Memperlancar Mobilitas Alat Mesin Pertanian,</p>
+          <p>Pengangkutan Sarana Produksi menuju Lahan Pertanian dan Mengangkut Hasil Produk Pertanian dari Lahan Menuju ke Tempat Pengumpulan</p>
+      </div>
+      <div class="row">
+        <div class="col-md-7">
+        <img style="width: 95%;" src="images/blog/JUT.png" class="card-img" alt="grafik">
+        </div>
+        <div class="col-md-5">
+        <img style="width: 100%; height: 370px;" src="images/blog/jalan.jpg" class="card-img px-4 py-4" alt="jalan">
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- INFORMASI TABEL -->
+
+<br>
+  <!-- DATA JUT -->
+  <section class="container">
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped table-hover">
+        <thead>
+          <tr style="text-align: center;">
+            <th>No.</th>
+            <th>Kabupaten/Kota</th>
+            <th>Tersedia (m)</th>
+            <th>Keterangan</th>  
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1.</td>
+            <td>Paser</td>
+            <td style="text-align: right;">23,523</td>
+            <td>Tanaman Pangan, Perkebunan & Hortikultura</td>
+          </tr>
+          <tr>
+            <td>2.</td>
+            <td>Kutai Barat</td>
+            <td style="text-align: right;">18,537</td>
+            <td>Tanaman Pangan & Hortikultura</td>
+          </tr>
+          <tr>
+            <td>3.</td>
+            <td>Kutai Kartanegara</td>
+            <td style="text-align: right;">255,700</td>
+            <td>Tanaman Pangan & Hortikultura</td>
+          </tr>
+          <tr>
+            <td>4.</td>
+            <td>Kutai Timur</td>
+            <td style="text-align: right;">31,642</td>
+            <td>Tanaman Pangan, Perkebunan & Hortikultura</td>
+          </tr>
+          <tr>
+            <td>5.</td>
+            <td>Berau</td>
+            <td style="text-align: right;">163,000</td>
+            <td>Tanaman Pangan, Perkebunan & Hortikultura</td>
+          </tr>
+          <tr>
+            <td>6.</td>
+            <td>Penajam Paser Utara</td>
+            <td style="text-align: right;">81,200</td>
+            <td>Tanaman Pangan, Perkebunan & Hortikultura</td>
+          </tr>
+          <tr>
+            <td>7.</td>
+            <td>Mahakam Ulu</td>
+            <td style="text-align: right;">20,460</td>
+            <td>Tanaman Pangan & Perkebunan</td>
+          </tr>
+          <tr>
+            <td>8.</td>
+            <td>Balikpapan</td>
+            <td style="text-align: right;">6,500</td>
+            <td>Hortikultura</td>
+          </tr>
+          <tr style="color: red;">
+            <td>9.</td>
+            <td>Samarinda</td>
+            <td style="text-align: right;">0</td>
+            <td style="text-align: right;"></td>
+          </tr>
+          <tr>
+            <td>10.</td>
+            <td>Bontang</td>
+            <td style="text-align: right;">900</td>
+            <td>Hortikultura</td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+  </section>
+<!-- /DATA JUT -->
+
+  <!-- FOOTER -->
+  <section class="py-1" style="background-color: darkgreen;">
+    <footer class="container">
+      <div class="row">
+        <a target="_blank" href="https://dispertan.kaltimprov.go.id/"><img src="images/DINAS PANGAN, TANAMAN PANGAN.svg" alt="logo" style="width: 500px;"></a>
+      </div>
+      <div class="row">
+        <div class="col col-lg-6">
+          <h4 class="text-white text-center">Hubungi Kami</h4>
+          <p class="text-white">Jl. Basuki Rahmat No.6, Kelurahan Bugis, Kecamatan Samarinda Kota,</p>
+          <p class="text-white">Kota Samarinda, Provinsi Kalimantan Timur (75121)</p>
+          <p class="text-white">Telp : (0541) 742484, Fax. 0541-743867</p>
+          <p class="text-white mb-0">Email : dispertan@kaltimprov.go.id</p>
+        </div>
+        <div class="col col-lg-2 sm-1">
+          <h4 class="text-white text-center">Menu</h4>
+          <a href="webgis.html"><p class="text-white" style="padding-left: 22%;">Geospasial</p></a>
+          <a href=""><p class="text-white" style="padding-left: 22%;">Data Tabular</p></a>
+          <a href="galeri.html"><p class="text-white" style="padding-left: 22%;">Galeri</p></a>
+        </div>
+        <div class="col col-lg-2 sm-1">
+          <h4 class="text-white text-center">Selengkapnya</h4>
+          <br>
+          <a href="https://webgis.sevenpion.web.id/login" class="login-button mx-5 mt-auto">Login</a>
+        </div>
+        <div class="col col-lg-2 sm-1">
+          <h4 class="text-white text-center">Sosial Media</h4>
+          <div class="text-center">
+            <a target="_blank" href="https://www.facebook.com/profile.php?id=100017162644745" class="text-decoration-none text-white"><i class="ti-facebook fs-4 me-2"></i></a>
+            <a target="_blank" href="https://twitter.com/DispanTph" class="text-decoration-none text-white"><i class="ti-twitter fs-4 me-2"></i></a>
+            <a target="_blank" href="https://www.instagram.com/dispantphkaltim/" class="text-decoration-none text-white"><i class="ti-instagram fs-4 me-2"></i></a>
+            <a target="_blank" href="https://www.youtube.com/channel/UC7XgxCFrKta7U_fJ3NYlWKw" class="text-decoration-none text-white"><i class="ti-youtube fs-4 me-2"></i></a>
+          </div>
+        </div>
+      </div>
+      <hr class="text-white">
+      <div>
+        <p class="text-white text-center">Copyright &copy; 2024 DINAS PANGAN, TANAMAN PANGAN DAN HORTIKULTURA PROVINSI KALIMANTAN TIMUR</p>
+      </div>
+    </footer>
+  </section>
+  <!-- /FOOTER -->
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<!-- jQuery -->
+<script src="plugins/jQuery/jquery.min.js"></script>
+<!-- aos -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init();
+</script>
+<!-- venobox popup -->
+<script src="plugins/venobox/venobox.min.js"></script>
+<!-- filter -->
+<script src="plugins/filterizr/jquery.filterizr.min.js"></script>
+
+<!-- Main Script -->
+<script src="js/script.js"></script>
+
+<!-- Auto Hide Navbar -->
+<script>
+  let prevScrollPos = window.pageYOffset;
+  window.onscroll=()=>{
+    let currentScrollPos=window.pageYOffset;
+    if(prevScrollPos<currentScrollPos){
+      document.querySelector('nav').classList.add('hide')
+    }else{
+      document.querySelector('nav').classList.remove('hide')
+    }
+    prevScrollPos=currentScrollPos
+  }
+</script>
+
+</body>
+</html>
