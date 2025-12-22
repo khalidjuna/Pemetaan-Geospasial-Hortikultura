@@ -903,7 +903,7 @@ footer .footer-content {
   display: flex;
   flex-wrap: wrap; /* Agar elemen bisa wrap jika perlu */
   justify-content: space-between; /* Menyebarkan kolom secara merata */
-  gap: 20px; /* Menambahkan jarak antara elemen */
+  gap: 15px; /* Menambahkan jarak antara elemen */
 }
 
 /* Kolom Kontak Kami */
@@ -925,14 +925,14 @@ footer .footer-social {
 
 /* Menata Peta agar berbentuk Persegi */
 footer .footer-map {
-  flex: 1 1 45%; /* Peta di sebelah kanan Kontak Kami */
+  flex: 4 4 45%; /* Peta di sebelah kanan Kontak Kami */
 }
 
 #map {
-  width: 100%; /* Lebar 100% dari kontainer */
+  width: 300px; /* Lebar 100% dari kontainer */
   height: 300px; /* Menentukan tinggi peta agar berbentuk persegi */
   margin-top: 10px;
-  border-radius: 5px; /* Sudut peta lebih halus */
+  border-radius: 2px; /* Sudut peta lebih halus */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Menambahkan shadow untuk peta */
 }
 
@@ -958,7 +958,7 @@ footer .footer-menu a,
 footer .footer-social a {
   color: #fff;
   font-size: 16px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   display: inline-block;
 }
 
