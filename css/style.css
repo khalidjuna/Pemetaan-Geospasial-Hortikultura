@@ -868,7 +868,7 @@ link:focus,
 }
 
 .newsletter-block .form-control {
-  height: 90px;
+  height: 50px;
 }
 
 .bg-footer {
@@ -896,6 +896,75 @@ link:focus,
 }
 .filter-controls li:hover {
   color: #ffbc3b;
+}
+
+/* Footer dengan Flexbox */
+footer .footer-content {
+  display: flex;
+  flex-wrap: wrap; /* Agar elemen bisa wrap jika perlu */
+  justify-content: space-between; /* Menyebarkan kolom secara merata */
+  gap: 15px; /* Menambahkan jarak antara elemen */
+}
+
+/* Kolom Kontak Kami */
+footer .footer-contact {
+  flex: 1 1 70%;  /* Lebar 45% dari lebar footer */
+}
+
+/* Kolom Menu */
+footer .footer-menu {
+  flex: 1 1 100%;  /* Lebar 100% agar menu tampil di bawah */
+}
+
+/* Kolom Sosial Media */
+footer .footer-social {
+  flex: 1 1 100%;  /* Sosial media berada di bawah, lebar penuh */
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Menata Peta agar berbentuk Persegi */
+footer .footer-map {
+  flex: 4 4 45%; /* Peta di sebelah kanan Kontak Kami */
+}
+
+#map {
+  width: 300px; /* Lebar 100% dari kontainer */
+  height: 300px; /* Menentukan tinggi peta agar berbentuk persegi */
+  margin-top: 10px;
+  border-radius: 2px; /* Sudut peta lebih halus */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Menambahkan shadow untuk peta */
+}
+
+/* Mengurangi margin pada kolom footer */
+footer .row > .col {
+  margin-bottom: 10px;
+}
+
+/* Peta di dalam Footer, memberikan jarak antar elemen */
+footer .footer-map {
+  margin-bottom: 10px;
+}
+
+/* Menu dan Sosial Media */
+footer .footer-menu h5,
+footer .footer-social h5 {
+  font-size: 18px;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+footer .footer-menu a,
+footer .footer-social a {
+  color: #fff;
+  font-size: 16px;
+  margin-bottom: 10px;
+  display: inline-block;
+}
+
+/* Menyesuaikan padding dan margin */
+footer .footer-menu {
+  margin-top: 20px;
 }
 /*# sourceMappingURL=style.css.map */
 
