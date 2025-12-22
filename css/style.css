@@ -908,7 +908,7 @@ footer .footer-content {
 
 /* Kolom Kontak Kami */
 footer .footer-contact {
-  flex: 1 1 45%;  /* Lebar 45% dari lebar footer */
+  flex: 1 1 70%;  /* Lebar 45% dari lebar footer */
 }
 
 /* Kolom Menu */
