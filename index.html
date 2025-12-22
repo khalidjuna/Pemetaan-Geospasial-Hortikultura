@@ -337,46 +337,18 @@
           <img src="images/DINAS PANGAN, TANAMAN PANGAN.svg" alt="logo" style="width: 500px;">
         </a>
       </div>
-      <!-- <div class="row">
+      <div class="row">
         <div class="col col-lg-6 col-sm-6">
-          <h5 class="text-white text-center">Kontak Kami Kami</h5>
-          <p class="text-white">Alamat:</strong> Jl. Basuki Rahmat No.6, Samarinda</p>
-          <p class="text-white">Telp : (0541) 742484, Fax. 0541-743867</p>
-          <p class="text-white mb-0">Email:</strong> <a href="mailto:dptph@kaltimprov.go.id">dptph@kaltimprov.go.id</a></p>
-        </div> -->
-        <!-- Kontak Section -->
-         <section id="kontak" class="kontak-section">
-          <div class="container">
-            <div class="row">
-              <div class="col col-lg-6 col-sm-6">
-                <h3>Kontak</h3>
-                <div class="kontak-info">
-                  <p><i class="fas fa-map-marker-alt"></i> <strong>Alamat:</strong> Jl. Basuki Rahmat No.6, Samarinda</p>
-                  <p><i class="fas fa-envelope"></i> <strong>Email:</strong> <a href="mailto:dptph@kaltimprov.go.id">dptph@kaltimprov.go.id</a></p>
-                  <p><i class="fas fa-clock"></i> <strong>Jam Kerja:</strong> Senin–Kamis: 07.30–16.00 WITA, Jumat: 07.30–11.00 WITA</p>
-              </div>
-          </div>
-      </div>
-  </div>
-</section>
-<!-- End Kontak Section -->
-
-        <!-- Peta -->
-        <div class="col col-lg-6 col-sm-6">
-          <div id="map" style="height: 300px; margin-bottom: 20px;"></div>
+          <h5 class="text-white">Kontak Kami</h5> 
+          <p class="text-white"><i class="fas fa-map-marker-alt"></i> <strong>Alamat:</strong> Jl. Basuki Rahmat No.6, Samarinda</p>
+          <p class="text-white"><i class="fas fa-envelope"></i> <strong>Email:</strong> <a href="mailto:dptph@kaltimprov.go.id">dptph@kaltimprov.go.id</a></p>
+          <p class="text-white"><i class="fas fa-clock"></i> <strong>Jam Kerja:</strong> Senin–Kamis: 07.30–16.00 WITA, Jumat: 07.30–11.00 WITA</p>
         </div>
-
         <div class="col col-lg-3 col-sm-3">
           <h5 class="text-white">Menu</h5>
-          <a href="webgis.html">
-            <p class="text-white">Geospasial</p>
-          </a>
-          <a href="">
-            <p class="text-white">Statistik</p>
-          </a>
-          <a href="galeri.html">
-            <p class="text-white">Galeri Komoditas</p>
-          </a>
+          <a href="webgis.html"><p class="text-white">Geospasial</p></a>
+          <a href=""><p class="text-white">Statistik</p></a>
+          <a href="galeri.html"><p class="text-white">Galeri Komoditas</p></a>
         </div>
 
         <div class="col col-lg-3 col-sm-3">
@@ -391,6 +363,10 @@
             <a target="_blank" href="https://www.youtube.com/channel/UC7XgxCFrKta7U_fJ3NYlWKw"
               class="text-decoration-none text-white"><i class="ti-youtube fs-4 me-2"></i></a>
           </div>
+           <!-- Peta -->
+  <div class="col col-lg-6 col-sm-10">
+    <div id="map" style="height: 300px; margin-bottom: 20px;"></div>
+  </div>
         </div>
       </div>
       <hr class="text-white">
@@ -400,11 +376,13 @@
       </div>
     </footer>
 
-  </section>
 
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+ 
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <!-- /FOOTER -->
+
 
   <!-- Auto Hide Navbar -->
   <script>
@@ -420,7 +398,7 @@
     }
 
     // Inisialisasi peta dan menambahkan marker di koordinat yang diberikan
-    var map = L.map('map').setView([-0.49116127082268457, 117.14904539488927], 13); // Koordinat X: 116.500007, Y: -1.56846
+    var map = L.map('map').setView([-0.49116127082268457, 117.14904539488927], 13);
 
     // Menambahkan Tile Layer (menggunakan OpenStreetMap sebagai contoh)
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
