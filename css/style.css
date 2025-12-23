@@ -968,6 +968,23 @@ footer .footer-menu {
 }
 /*# sourceMappingURL=style.css.map */
 
+.carousel-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 20px;  /* Memberi jarak antara teks dan tepi gambar */
+  text-align: left;  /* Menyelaraskan teks ke kiri */
+}
+
+.carousel-caption h1, .carousel-caption p {
+  margin: 0;
+  padding: 0;
+}
+
+.text-white {
+  color: rgb(27, 25, 25);  /* Warna teks*/
+}
+
 .cuaca-section {
   padding: 50px 0;
   background-color: #f0f8ff;
