@@ -1593,7 +1593,7 @@
       },
 
       // Highlight & Popup
-      onEachFeature: function (feature, layer) {
+      onEachFeature: function (feature, layer, polygon) {
         if (feature.properties) {
           var content =
             "<table class='table table-striped table-bordered'>" +
@@ -1607,6 +1607,9 @@
             "</td></tr>" +
             "<tr><th>Kecamatan</th><td>" +
             feature.properties.Kecamatan +
+            "</td></tr>" +
+            "<tr><th>Kabupaten</th><td>" +
+            feature.properties.WADMKK +
             "</td></tr>" +
             "<tr><th>Jenis Komoditas</th><td>" +
             feature.properties.Komoditas +
@@ -1625,32 +1628,715 @@
             feature.properties.Gapoktan +
             "</td></tr>" +
             "</table>";
-          layer.on({
-            click: function (e) {
-              $("#feature-title").html("Informasi Kelompok Tani"); //Judul Modal
-              $("#feature-info").html(content); //Isi Modal
-              $("#featureModal").modal("show"); //Menampilkan featureModal
-            },
+
+          // Menambahkan Polygon jika ada
+          if (feature.geometry2 && feature.geometry2.coordinates) {
+            var polygonCoordinates = feature.geometry2.coordinates[0].map(function (coord) {
+              return [coord[1], coord[0]]; // Ubah dari [lon, lat] menjadi [lat, lon]
+            });
+
+            var polygon = L.polygon(polygonCoordinates, { color: 'blue', weight: 2 }).addTo(map);
+            // var polygon = L.polygon(polygonCoordinates, { color: 'blue', weight: 2 });
+
+          }
+          // Menambahkan event listener klik untuk menampilkan modal dengan informasi
+          layer.on('click', function (e) {
+            $("#feature-title").html("Informasi Kelompok Tani");
+            $("#feature-info").html(content);
+            $("#featureModal").modal("show");
           });
         }
-        // Menambahkan Polygon jika ada
-        if (feature.geometry2 && feature.geometry2.coordinates) {
-          var polygonCoordinates = feature.geometry2.coordinates[0].map(function (coord) {
-            return [coord[1], coord[0]]; // Ubah dari [lon, lat] menjadi [lat, lon]
-          });
-
-          var polygon = L.polygon(polygonCoordinates, { color: 'blue', weight: 2 }).addTo(map);
-          polygon.bindPopup("<b>Polygon Lahan</b>");
-        }
-
-      },
+      }
     });
 
     $.getJSON("data/poktan_nipahbaru_coba.geojson", function (data) {
       nipahbaru.addData(data);
-      map.addLayer(nipahbaru);
+      // map.addLayer(nipahbaru);
     });
 
+    /* Poktan Warubaru */
+    var warubaru = L.geoJson(null, {
+      pointToLayer: function (feature, latlng) {
+        return L.marker(latlng, {
+          icon: L.icon({
+            iconUrl: "images/city-marker.png",
+            iconSize: [16, 16],
+            iconAnchor: [14, 28],
+            popupAnchor: [0, -20],
+            tooltipAnchor: [0, -24],
+          }),
+        });
+      },
+
+      // Highlight & Popup
+      onEachFeature: function (feature, layer, polygon) {
+        if (feature.properties) {
+          var content =
+            "<table class='table table-striped table-bordered'>" +
+            "<tr><th>Nama Poktan</th><td>" +
+            feature.properties.Poktan +
+            "<tr><th>Status</th><td>" +
+            feature.properties.Status +
+            "</td></tr>" +
+            "<tr><th>Desa</th><td>" +
+            feature.properties.Desa +
+            "</td></tr>" +
+            "<tr><th>Kecamatan</th><td>" +
+            feature.properties.Kecamatan +
+            "</td></tr>" +
+            "<tr><th>Kabupaten</th><td>" +
+            feature.properties.WADMKK +
+            "</td></tr>" +
+            "<tr><th>Jenis Komoditas</th><td>" +
+            feature.properties.Komoditas +
+            "<tr><th>Luas</th><td>" +
+            feature.properties.Luas +
+            "<tr><th>Pemilik</th><td>" +
+            feature.properties.Pemilik +
+            "<tr><th>Penyuluh</th><td>" +
+            feature.properties.Penyuluh +
+            "<tr><th>Lahan</th><td>" +
+            feature.properties.Lahan +
+            "<tr><th>Milik</th><td>" +
+            feature.properties.Milik +
+            "</td></tr>" +
+            "<tr><th>Nama Gapoktan</th><td>" +
+            feature.properties.Gapoktan +
+            "</td></tr>" +
+            "</table>";
+
+          // Menambahkan Polygon jika ada
+          if (feature.geometry2 && feature.geometry2.coordinates) {
+            var polygonCoordinates = feature.geometry2.coordinates[0].map(function (coord) {
+              return [coord[1], coord[0]]; // Ubah dari [lon, lat] menjadi [lat, lon]
+            });
+
+            var polygon = L.polygon(polygonCoordinates, { color: 'blue', weight: 2 }).addTo(map);
+            // var polygon = L.polygon(polygonCoordinates, { color: 'blue', weight: 2 });
+
+          }
+          // Menambahkan event listener klik untuk menampilkan modal dengan informasi
+          layer.on('click', function (e) {
+            $("#feature-title").html("Informasi Kelompok Tani");
+            $("#feature-info").html(content);
+            $("#featureModal").modal("show");
+          });
+        }
+      }
+    });
+
+    $.getJSON("data/poktan_warubaru_coba.geojson", function (data) {
+      warubaru.addData(data);
+      // map.addLayer(warubaru);
+    });
+
+    /* Poktan Labangka Baru */
+    var labangkabaru = L.geoJson(null, {
+      pointToLayer: function (feature, latlng) {
+        return L.marker(latlng, {
+          icon: L.icon({
+            iconUrl: "images/city-marker.png",
+            iconSize: [16, 16],
+            iconAnchor: [14, 28],
+            popupAnchor: [0, -20],
+            tooltipAnchor: [0, -24],
+          }),
+        });
+      },
+
+      // Highlight & Popup
+      onEachFeature: function (feature, layer, polygon) {
+        if (feature.properties) {
+          var content =
+            "<table class='table table-striped table-bordered'>" +
+            "<tr><th>Nama Poktan</th><td>" +
+            feature.properties.Poktan +
+            "<tr><th>Status</th><td>" +
+            feature.properties.Status +
+            "</td></tr>" +
+            "<tr><th>Desa</th><td>" +
+            feature.properties.Desa +
+            "</td></tr>" +
+            "<tr><th>Kecamatan</th><td>" +
+            feature.properties.Kecamatan +
+            "</td></tr>" +
+            "<tr><th>Kabupaten</th><td>" +
+            feature.properties.WADMKK +
+            "</td></tr>" +
+            "<tr><th>Jenis Komoditas</th><td>" +
+            feature.properties.Komoditas +
+            "<tr><th>Luas</th><td>" +
+            feature.properties.Luas +
+            "<tr><th>Pemilik</th><td>" +
+            feature.properties.Pemilik +
+            "<tr><th>Penyuluh</th><td>" +
+            feature.properties.Penyuluh +
+            "<tr><th>Lahan</th><td>" +
+            feature.properties.Lahan +
+            "<tr><th>Milik</th><td>" +
+            feature.properties.Milik +
+            "</td></tr>" +
+            "<tr><th>Nama Gapoktan</th><td>" +
+            feature.properties.Gapoktan +
+            "</td></tr>" +
+            "</table>";
+
+          // Menambahkan Polygon jika ada
+          if (feature.geometry2 && feature.geometry2.coordinates) {
+            var polygonCoordinates = feature.geometry2.coordinates[0].map(function (coord) {
+              return [coord[1], coord[0]]; // Ubah dari [lon, lat] menjadi [lat, lon]
+            });
+
+            var polygon = L.polygon(polygonCoordinates, { color: 'blue', weight: 2 }).addTo(map);
+            // var polygon = L.polygon(polygonCoordinates, { color: 'blue', weight: 2 });
+
+          }
+          // Menambahkan event listener klik untuk menampilkan modal dengan informasi
+          layer.on('click', function (e) {
+            $("#feature-title").html("Informasi Kelompok Tani");
+            $("#feature-info").html(content);
+            $("#featureModal").modal("show");
+          });
+        }
+      }
+    });
+
+    $.getJSON("data/poktan_labangkabaru_coba.geojson", function (data) {
+      labangkabaru.addData(data);
+      // map.addLayer(labangkabaru);
+    });
+
+    /* Poktan Rantau Pulung Baru */
+    var rantaupulungbaru = L.geoJson(null, {
+      pointToLayer: function (feature, latlng) {
+        return L.marker(latlng, {
+          icon: L.icon({
+            iconUrl: "images/city-marker.png",
+            iconSize: [16, 16],
+            iconAnchor: [14, 28],
+            popupAnchor: [0, -20],
+            tooltipAnchor: [0, -24],
+          }),
+        });
+      },
+
+      // Highlight & Popup
+      onEachFeature: function (feature, layer, polygon) {
+        if (feature.properties) {
+          var content =
+            "<table class='table table-striped table-bordered'>" +
+            "<tr><th>Nama Poktan</th><td>" +
+            feature.properties.Poktan +
+            "<tr><th>Status</th><td>" +
+            feature.properties.Status +
+            "</td></tr>" +
+            "<tr><th>Desa</th><td>" +
+            feature.properties.Desa +
+            "</td></tr>" +
+            "<tr><th>Kecamatan</th><td>" +
+            feature.properties.Kecamatan +
+            "</td></tr>" +
+            "<tr><th>Kabupaten</th><td>" +
+            feature.properties.WADMKK +
+            "</td></tr>" +
+            "<tr><th>Jenis Komoditas</th><td>" +
+            feature.properties.Komoditas +
+            "<tr><th>Luas</th><td>" +
+            feature.properties.Luas +
+            "<tr><th>Pemilik</th><td>" +
+            feature.properties.Pemilik +
+            "<tr><th>Penyuluh</th><td>" +
+            feature.properties.Penyuluh +
+            "<tr><th>Lahan</th><td>" +
+            feature.properties.Lahan +
+            "<tr><th>Milik</th><td>" +
+            feature.properties.Milik +
+            "</td></tr>" +
+            "<tr><th>Nama Gapoktan</th><td>" +
+            feature.properties.Gapoktan +
+            "</td></tr>" +
+            "</table>";
+
+          // Menambahkan Polygon jika ada
+          if (feature.geometry2 && feature.geometry2.coordinates) {
+            var polygonCoordinates = feature.geometry2.coordinates[0].map(function (coord) {
+              return [coord[1], coord[0]]; // Ubah dari [lon, lat] menjadi [lat, lon]
+            });
+
+            var polygon = L.polygon(polygonCoordinates, { color: 'blue', weight: 2 }).addTo(map);
+            // var polygon = L.polygon(polygonCoordinates, { color: 'blue', weight: 2 });
+
+          }
+          // Menambahkan event listener klik untuk menampilkan modal dengan informasi
+          layer.on('click', function (e) {
+            $("#feature-title").html("Informasi Kelompok Tani");
+            $("#feature-info").html(content);
+            $("#featureModal").modal("show");
+          });
+        }
+      }
+    });
+
+    $.getJSON("data/poktan_rantaupulungbaru_coba.geojson", function (data) {
+      rantaupulungbaru.addData(data);
+      // map.addLayer(rantaupulungbaru);
+    });
+
+    /* Poktan Samboja Baru */
+    var sambojabaru = L.geoJson(null, {
+      pointToLayer: function (feature, latlng) {
+        return L.marker(latlng, {
+          icon: L.icon({
+            iconUrl: "images/city-marker.png",
+            iconSize: [16, 16],
+            iconAnchor: [14, 28],
+            popupAnchor: [0, -20],
+            tooltipAnchor: [0, -24],
+          }),
+        });
+      },
+
+      // Highlight & Popup
+      onEachFeature: function (feature, layer, polygon) {
+        if (feature.properties) {
+          var content =
+            "<table class='table table-striped table-bordered'>" +
+            "<tr><th>Nama Poktan</th><td>" +
+            feature.properties.Poktan +
+            "<tr><th>Status</th><td>" +
+            feature.properties.Status +
+            "</td></tr>" +
+            "<tr><th>Desa</th><td>" +
+            feature.properties.Desa +
+            "</td></tr>" +
+            "<tr><th>Kecamatan</th><td>" +
+            feature.properties.Kecamatan +
+            "</td></tr>" +
+            "<tr><th>Kabupaten</th><td>" +
+            feature.properties.WADMKK +
+            "</td></tr>" +
+            "<tr><th>Jenis Komoditas</th><td>" +
+            feature.properties.Komoditas +
+            "<tr><th>Luas</th><td>" +
+            feature.properties.Luas +
+            "<tr><th>Pemilik</th><td>" +
+            feature.properties.Pemilik +
+            "<tr><th>Penyuluh</th><td>" +
+            feature.properties.Penyuluh +
+            "<tr><th>Lahan</th><td>" +
+            feature.properties.Lahan +
+            "<tr><th>Milik</th><td>" +
+            feature.properties.Milik +
+            "</td></tr>" +
+            "<tr><th>Nama Gapoktan</th><td>" +
+            feature.properties.Gapoktan +
+            "</td></tr>" +
+            "</table>";
+
+          // Menambahkan Polygon jika ada
+          if (feature.geometry2 && feature.geometry2.coordinates) {
+            var polygonCoordinates = feature.geometry2.coordinates[0].map(function (coord) {
+              return [coord[1], coord[0]]; // Ubah dari [lon, lat] menjadi [lat, lon]
+            });
+
+            var polygon = L.polygon(polygonCoordinates, { color: 'blue', weight: 2 }).addTo(map);
+            // var polygon = L.polygon(polygonCoordinates, { color: 'blue', weight: 2 });
+
+          }
+          // Menambahkan event listener klik untuk menampilkan modal dengan informasi
+          layer.on('click', function (e) {
+            $("#feature-title").html("Informasi Kelompok Tani");
+            $("#feature-info").html(content);
+            $("#featureModal").modal("show");
+          });
+        }
+      }
+    });
+
+    $.getJSON("data/poktan_sambojabaru_coba.geojson", function (data) {
+      sambojabaru.addData(data);
+      // map.addLayer(sambojabaru);
+    });
+
+    /* Poktan Sangatta Selatan Baru */
+    var sangattaselatanbaru = L.geoJson(null, {
+      pointToLayer: function (feature, latlng) {
+        return L.marker(latlng, {
+          icon: L.icon({
+            iconUrl: "images/city-marker.png",
+            iconSize: [16, 16],
+            iconAnchor: [14, 28],
+            popupAnchor: [0, -20],
+            tooltipAnchor: [0, -24],
+          }),
+        });
+      },
+
+      // Highlight & Popup
+      onEachFeature: function (feature, layer, polygon) {
+        if (feature.properties) {
+          var content =
+            "<table class='table table-striped table-bordered'>" +
+            "<tr><th>Nama Poktan</th><td>" +
+            feature.properties.Poktan +
+            "<tr><th>Status</th><td>" +
+            feature.properties.Status +
+            "</td></tr>" +
+            "<tr><th>Desa</th><td>" +
+            feature.properties.Desa +
+            "</td></tr>" +
+            "<tr><th>Kecamatan</th><td>" +
+            feature.properties.Kecamatan +
+            "</td></tr>" +
+            "<tr><th>Kabupaten</th><td>" +
+            feature.properties.WADMKK +
+            "</td></tr>" +
+            "<tr><th>Jenis Komoditas</th><td>" +
+            feature.properties.Komoditas +
+            "<tr><th>Luas</th><td>" +
+            feature.properties.Luas +
+            "<tr><th>Pemilik</th><td>" +
+            feature.properties.Pemilik +
+            "<tr><th>Penyuluh</th><td>" +
+            feature.properties.Penyuluh +
+            "<tr><th>Lahan</th><td>" +
+            feature.properties.Lahan +
+            "<tr><th>Milik</th><td>" +
+            feature.properties.Milik +
+            "</td></tr>" +
+            "<tr><th>Nama Gapoktan</th><td>" +
+            feature.properties.Gapoktan +
+            "</td></tr>" +
+            "</table>";
+
+          // Menambahkan Polygon jika ada
+          if (feature.geometry2 && feature.geometry2.coordinates) {
+            var polygonCoordinates = feature.geometry2.coordinates[0].map(function (coord) {
+              return [coord[1], coord[0]]; // Ubah dari [lon, lat] menjadi [lat, lon]
+            });
+
+            var polygon = L.polygon(polygonCoordinates, { color: 'blue', weight: 2 }).addTo(map);
+            // var polygon = L.polygon(polygonCoordinates, { color: 'blue', weight: 2 });
+
+          }
+          // Menambahkan event listener klik untuk menampilkan modal dengan informasi
+          layer.on('click', function (e) {
+            $("#feature-title").html("Informasi Kelompok Tani");
+            $("#feature-info").html(content);
+            $("#featureModal").modal("show");
+          });
+        }
+      }
+    });
+
+    $.getJSON("data/poktan_sangattaselatanbaru_coba.geojson", function (data) {
+      sangattaselatanbaru.addData(data);
+      // map.addLayer(sangattaselatanbaru);
+    });
+
+    /* Poktan Sangatta Utara Baru */
+    var sangattautarabaru = L.geoJson(null, {
+      pointToLayer: function (feature, latlng) {
+        return L.marker(latlng, {
+          icon: L.icon({
+            iconUrl: "images/city-marker.png",
+            iconSize: [16, 16],
+            iconAnchor: [14, 28],
+            popupAnchor: [0, -20],
+            tooltipAnchor: [0, -24],
+          }),
+        });
+      },
+
+      // Highlight & Popup
+      onEachFeature: function (feature, layer, polygon) {
+        if (feature.properties) {
+          var content =
+            "<table class='table table-striped table-bordered'>" +
+            "<tr><th>Nama Poktan</th><td>" +
+            feature.properties.Poktan +
+            "<tr><th>Status</th><td>" +
+            feature.properties.Status +
+            "</td></tr>" +
+            "<tr><th>Desa</th><td>" +
+            feature.properties.Desa +
+            "</td></tr>" +
+            "<tr><th>Kecamatan</th><td>" +
+            feature.properties.Kecamatan +
+            "</td></tr>" +
+            "<tr><th>Kabupaten</th><td>" +
+            feature.properties.WADMKK +
+            "</td></tr>" +
+            "<tr><th>Jenis Komoditas</th><td>" +
+            feature.properties.Komoditas +
+            "<tr><th>Luas</th><td>" +
+            feature.properties.Luas +
+            "<tr><th>Pemilik</th><td>" +
+            feature.properties.Pemilik +
+            "<tr><th>Penyuluh</th><td>" +
+            feature.properties.Penyuluh +
+            "<tr><th>Lahan</th><td>" +
+            feature.properties.Lahan +
+            "<tr><th>Milik</th><td>" +
+            feature.properties.Milik +
+            "</td></tr>" +
+            "<tr><th>Nama Gapoktan</th><td>" +
+            feature.properties.Gapoktan +
+            "</td></tr>" +
+            "</table>";
+
+          // Menambahkan Polygon jika ada
+          if (feature.geometry2 && feature.geometry2.coordinates) {
+            var polygonCoordinates = feature.geometry2.coordinates[0].map(function (coord) {
+              return [coord[1], coord[0]]; // Ubah dari [lon, lat] menjadi [lat, lon]
+            });
+
+            var polygon = L.polygon(polygonCoordinates, { color: 'blue', weight: 2 }).addTo(map);
+            // var polygon = L.polygon(polygonCoordinates, { color: 'blue', weight: 2 });
+
+          }
+          // Menambahkan event listener klik untuk menampilkan modal dengan informasi
+          layer.on('click', function (e) {
+            $("#feature-title").html("Informasi Kelompok Tani");
+            $("#feature-info").html(content);
+            $("#featureModal").modal("show");
+          });
+        }
+      }
+    });
+
+    $.getJSON("data/poktan_sangattautarabaru_coba.geojson", function (data) {
+      sangattautarabaru.addData(data);
+      // map.addLayer(sangattautarabaru);
+    });
+
+    /* Poktan Teluk Pandan Baru */
+    var telukpandanbaru = L.geoJson(null, {
+      pointToLayer: function (feature, latlng) {
+        return L.marker(latlng, {
+          icon: L.icon({
+            iconUrl: "images/city-marker.png",
+            iconSize: [16, 16],
+            iconAnchor: [14, 28],
+            popupAnchor: [0, -20],
+            tooltipAnchor: [0, -24],
+          }),
+        });
+      },
+
+      // Highlight & Popup
+      onEachFeature: function (feature, layer, polygon) {
+        if (feature.properties) {
+          var content =
+            "<table class='table table-striped table-bordered'>" +
+            "<tr><th>Nama Poktan</th><td>" +
+            feature.properties.Poktan +
+            "<tr><th>Status</th><td>" +
+            feature.properties.Status +
+            "</td></tr>" +
+            "<tr><th>Desa</th><td>" +
+            feature.properties.Desa +
+            "</td></tr>" +
+            "<tr><th>Kecamatan</th><td>" +
+            feature.properties.Kecamatan +
+            "</td></tr>" +
+            "<tr><th>Kabupaten</th><td>" +
+            feature.properties.WADMKK +
+            "</td></tr>" +
+            "<tr><th>Jenis Komoditas</th><td>" +
+            feature.properties.Komoditas +
+            "<tr><th>Luas</th><td>" +
+            feature.properties.Luas +
+            "<tr><th>Pemilik</th><td>" +
+            feature.properties.Pemilik +
+            "<tr><th>Penyuluh</th><td>" +
+            feature.properties.Penyuluh +
+            "<tr><th>Lahan</th><td>" +
+            feature.properties.Lahan +
+            "<tr><th>Milik</th><td>" +
+            feature.properties.Milik +
+            "</td></tr>" +
+            "<tr><th>Nama Gapoktan</th><td>" +
+            feature.properties.Gapoktan +
+            "</td></tr>" +
+            "</table>";
+
+          // Menambahkan Polygon jika ada
+          if (feature.geometry2 && feature.geometry2.coordinates) {
+            var polygonCoordinates = feature.geometry2.coordinates[0].map(function (coord) {
+              return [coord[1], coord[0]]; // Ubah dari [lon, lat] menjadi [lat, lon]
+            });
+
+            var polygon = L.polygon(polygonCoordinates, { color: 'blue', weight: 2 }).addTo(map);
+            // var polygon = L.polygon(polygonCoordinates, { color: 'blue', weight: 2 });
+
+          }
+          // Menambahkan event listener klik untuk menampilkan modal dengan informasi
+          layer.on('click', function (e) {
+            $("#feature-title").html("Informasi Kelompok Tani");
+            $("#feature-info").html(content);
+            $("#featureModal").modal("show");
+          });
+        }
+      }
+    });
+
+    $.getJSON("data/poktan_telukpandanbaru_coba.geojson", function (data) {
+      telukpandanbaru.addData(data);
+      // map.addLayer(telukpandanbaru);
+    });
+
+    /* Poktan Teluk Singkama Baru */
+    var teluksingkamabaru = L.geoJson(null, {
+      pointToLayer: function (feature, latlng) {
+        return L.marker(latlng, {
+          icon: L.icon({
+            iconUrl: "images/city-marker.png",
+            iconSize: [16, 16],
+            iconAnchor: [14, 28],
+            popupAnchor: [0, -20],
+            tooltipAnchor: [0, -24],
+          }),
+        });
+      },
+
+      // Highlight & Popup
+      onEachFeature: function (feature, layer, polygon) {
+        if (feature.properties) {
+          var content =
+            "<table class='table table-striped table-bordered'>" +
+            "<tr><th>Nama Poktan</th><td>" +
+            feature.properties.Poktan +
+            "<tr><th>Status</th><td>" +
+            feature.properties.Status +
+            "</td></tr>" +
+            "<tr><th>Desa</th><td>" +
+            feature.properties.Desa +
+            "</td></tr>" +
+            "<tr><th>Kecamatan</th><td>" +
+            feature.properties.Kecamatan +
+            "</td></tr>" +
+            "<tr><th>Kabupaten</th><td>" +
+            feature.properties.WADMKK +
+            "</td></tr>" +
+            "<tr><th>Jenis Komoditas</th><td>" +
+            feature.properties.Komoditas +
+            "<tr><th>Luas</th><td>" +
+            feature.properties.Luas +
+            "<tr><th>Pemilik</th><td>" +
+            feature.properties.Pemilik +
+            "<tr><th>Penyuluh</th><td>" +
+            feature.properties.Penyuluh +
+            "<tr><th>Lahan</th><td>" +
+            feature.properties.Lahan +
+            "<tr><th>Milik</th><td>" +
+            feature.properties.Milik +
+            "</td></tr>" +
+            "<tr><th>Nama Gapoktan</th><td>" +
+            feature.properties.Gapoktan +
+            "</td></tr>" +
+            "</table>";
+
+          // Menambahkan Polygon jika ada
+          if (feature.geometry2 && feature.geometry2.coordinates) {
+            var polygonCoordinates = feature.geometry2.coordinates[0].map(function (coord) {
+              return [coord[1], coord[0]]; // Ubah dari [lon, lat] menjadi [lat, lon]
+            });
+
+            var polygon = L.polygon(polygonCoordinates, { color: 'blue', weight: 2 }).addTo(map);
+            // var polygon = L.polygon(polygonCoordinates, { color: 'blue', weight: 2 });
+
+          }
+          // Menambahkan event listener klik untuk menampilkan modal dengan informasi
+          layer.on('click', function (e) {
+            $("#feature-title").html("Informasi Kelompok Tani");
+            $("#feature-info").html(content);
+            $("#featureModal").modal("show");
+          });
+        }
+      }
+    });
+
+    $.getJSON("data/poktan_teluksingkamabaru_coba.geojson", function (data) {
+      teluksingkamabaru.addData(data);
+      // map.addLayer(teluksingkamabaru);
+    });
+
+    /* Poktan Warubaru Baru */
+    var warubaru = L.geoJson(null, {
+      pointToLayer: function (feature, latlng) {
+        return L.marker(latlng, {
+          icon: L.icon({
+            iconUrl: "images/city-marker.png",
+            iconSize: [16, 16],
+            iconAnchor: [14, 28],
+            popupAnchor: [0, -20],
+            tooltipAnchor: [0, -24],
+          }),
+        });
+      },
+
+      // Highlight & Popup
+      onEachFeature: function (feature, layer, polygon) {
+        if (feature.properties) {
+          var content =
+            "<table class='table table-striped table-bordered'>" +
+            "<tr><th>Nama Poktan</th><td>" +
+            feature.properties.Poktan +
+            "<tr><th>Status</th><td>" +
+            feature.properties.Status +
+            "</td></tr>" +
+            "<tr><th>Desa</th><td>" +
+            feature.properties.Desa +
+            "</td></tr>" +
+            "<tr><th>Kecamatan</th><td>" +
+            feature.properties.Kecamatan +
+            "</td></tr>" +
+            "<tr><th>Kabupaten</th><td>" +
+            feature.properties.WADMKK +
+            "</td></tr>" +
+            "<tr><th>Jenis Komoditas</th><td>" +
+            feature.properties.Komoditas +
+            "<tr><th>Luas</th><td>" +
+            feature.properties.Luas +
+            "<tr><th>Pemilik</th><td>" +
+            feature.properties.Pemilik +
+            "<tr><th>Penyuluh</th><td>" +
+            feature.properties.Penyuluh +
+            "<tr><th>Lahan</th><td>" +
+            feature.properties.Lahan +
+            "<tr><th>Milik</th><td>" +
+            feature.properties.Milik +
+            "</td></tr>" +
+            "<tr><th>Nama Gapoktan</th><td>" +
+            feature.properties.Gapoktan +
+            "</td></tr>" +
+            "</table>";
+
+          // Menambahkan Polygon jika ada
+          if (feature.geometry2 && feature.geometry2.coordinates) {
+            var polygonCoordinates = feature.geometry2.coordinates[0].map(function (coord) {
+              return [coord[1], coord[0]]; // Ubah dari [lon, lat] menjadi [lat, lon]
+            });
+
+            var polygon = L.polygon(polygonCoordinates, { color: 'blue', weight: 2 }).addTo(map);
+            // var polygon = L.polygon(polygonCoordinates, { color: 'blue', weight: 2 });
+
+          }
+          // Menambahkan event listener klik untuk menampilkan modal dengan informasi
+          layer.on('click', function (e) {
+            $("#feature-title").html("Informasi Kelompok Tani");
+            $("#feature-info").html(content);
+            $("#featureModal").modal("show");
+          });
+        }
+      }
+    });
+
+    $.getJSON("data/poktan_warubaru_coba.geojson", function (data) {
+      warubaru.addData(data);
+      // map.addLayer(warubaru);
+    });
 
     /* Hortik Eksisting */
     map.createPane("pane_eksisting");
@@ -1877,7 +2563,20 @@
             { label: " Kabupaten Kutai Timur", layer: kutim },
             { label: " Kabupaten Mahakam Ulu", layer: mahulu },
             { label: " Kabupaten Paser", layer: paser },
-            { label: " Kabupaten Penajam Paser Utara", layer: penajam },
+            {
+              label: " Kabupaten Penajam Paser Utara", layer: penajam,
+              children: [
+                { label: "Nipah-Nipah", layer: nipahbaru },
+                { label: "Waru", layer: warubaru },
+                { label: "Labangka", layer: labangkabaru },
+                { label: "Rantau Pulung", layer: rantaupulungbaru },
+                { label: "Samboja", layer: sambojabaru },
+                { label: "Sangatta Selatan", layer: sangattaselatanbaru },
+                { label: "Sangatta Utara", layer: sangattautarabaru },
+                { label: "Teluk Pandan", layer: telukpandanbaru },
+                { label: "Teluk Singkama", layer: teluksingkamabaru }
+              ]
+            },
           ],
         },
         {

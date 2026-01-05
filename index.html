@@ -145,6 +145,59 @@
       <span class="visually-hidden">Next</span>
     </button>
   </div>
+  <!DOCTYPE html>
+  <html lang="id">
+  
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Cuaca Real-Time - BMKG</title>
+      <link rel="stylesheet" href="style.css">
+  </head>
+  
+  <body>
+      <!-- Cuaca Section -->
+      <section id="cuaca" class="cuaca-section">
+          <div class="container">
+              <div class="row">
+                  <!-- Cuaca Saat Ini -->
+                  <div class="col-md-6 cuaca-saat-ini">
+                      <h3>Cuaca Saat Ini</h3>
+                      <div class="cuaca-info">
+                          <div class="temp">
+                              <span class="temperature">32°</span>
+                              <span class="condition">Cerah Berawan</span>
+                          </div>
+                          <div class="additional-info">
+                              <div><strong>Kelembapan:</strong> 69%</div>
+                              <div><strong>Angin:</strong> 27.8 km/h (Barat Daya)</div>
+                              <div><strong>Cuaca Hujan:</strong> 1 mm</div>
+                          </div>
+                      </div>
+                  </div>
+  
+                  <!-- Prakiraan Cuaca -->
+                  <div class="col-md-6 prakiraan-cuaca">
+                      <h3>Prakiraan Cuaca</h3>
+                      <div class="forecast">
+                          <div class="forecast-item">
+                              <span class="forecast-day">Selasa, 23 Des</span>
+                              <span class="forecast-time">02:00</span>
+                              <span class="forecast-temp">23°</span>
+                              <span class="forecast-condition">Berawan</span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </section>
+      <!-- End Cuaca Section -->
+  
+      <script src="script.js"></script>
+  </body>
+  
+  </html>
+  
   <!-- /hero slider -->
 
   <!-- Header -->
@@ -156,16 +209,15 @@
       <div class="card border-danger mb-3" style="max-width: max-content; background-color: rgba(248, 249, 250, 0);">
         <div class="row g-0">
           <div class="col-md-5">
-            <img src="images/about/L4.png" class="img-fluid rounded-start" style="width: fit-content;"
-              alt="tentang" data-aos="flip-right">
+            <img src="images/about/ini.png" class="img-fluid rounded-start" style="width: fit-content;">
+              <alt="tentang" data-aos="flip-right">
           </div>
           <div class="col-md-7">
             <div class="card-header" style="background-color: rgba(33, 37, 41, 0);">
               <h3 style="text-align: center;" data-aos="fade-left"> 🌱 Sekilas Tentang Geospasial Bidang Produksi Hortikultura 🌱</h3>
             </div>
             <div class="card-body" data-aos="fade-left">
-              <p style="text-align: justify;"><i class="fas fa-check-circle"></i> Webgis adalah Sistem Informasi
-                Geografis berbasis Web yang memuat informasi Peta, Teks, dan Tabel</p>
+              <p style="text-align: justify;"><i class="fas fa-check-circle"></i> 🗺️Geospasial Bidang Produksi Hortikultura merupakan platform Sistem Informasi Geografis (SIG) berbasis web yang menyajikan data spasial dalam bentuk peta interaktif, informasi teks, dan tabel pendukung secara terintegrasi.</p>
               <p style="text-align: justify;"><i class="fas fa-check-circle"></i> Webgis Geospasial Bidang Produksi
                 Hortikultura Merupakan Website yang Memuat Informasi Spasial Masterplan Perencanaan Pengembangan
                 Lahan Hortikultura di Provinsi Kalimantan Timur</p>
@@ -196,8 +248,8 @@
             </div>
           </div>
           <div class="col-md-5">
-            <img class="img-fluid rounded-start" style="width:fit-content;" src="images/about/L5.png"
-              alt="about image" data-aos="flip-left">
+            <img class="img-fluid rounded-start" style="width:fit-content;" src="images/about/cover2.png">
+              <alt="about image" data-aos="flip-left">
           </div>
         </div>
       </div>
@@ -299,6 +351,11 @@
             <div class="card-body">
               <p><i class="ti-location-pin text-primary mr-2"></i> Sempulang, Tanah Grogot, Paser</p>
               <h4 class="card-title">Komoditas Sawi</h4>
+            <a href="images/scholarship/L4_1.jpeg"><img class="card-img-top rounded-3" src="images/scholarship/L4_1.jpeg"
+                alt="galeri1" data-aos="flip-left"></a>
+            <div class="card-body">
+              <p><i class="ti-location-pin text-primary mr-2"></i> Kecamatan Waru, Penajam Paser Utara</p>
+              <h4 class="card-title">Komoditas Cabe Rawit</h4>
             </div>
           </div>
         </div>
@@ -310,6 +367,11 @@
             <div class="card-body">
               <p><i class="ti-location-pin text-primary mr-2"></i>Penajam, Penajam, Penajam Paser Utara</p>
               <h4 class="card-title">Komoditas Pepaya</h4>
+            <a href="images/scholarship/L4_PPU_WARU_ WARU_COBA TANI 13_TOMAT.jpg"><img class="card-img-top rounded-3" src="images/scholarship/L4_PPU_WARU_ WARU_COBA TANI 13_TOMAT.jpg"
+                alt="galeri2" data-aos="flip-up"></a>
+            <div class="card-body">
+              <p><i class="ti-location-pin text-primary mr-2"></i> Kecamatan Waru, Penajam Paser Utara</p>
+              <h4 class="card-title">Komoditas Tomat</h4>
             </div>
           </div>
         </div>
@@ -321,6 +383,11 @@
             <div class="card-body">
               <p><i class="ti-location-pin text-primary mr-2"></i>Nipah Nipah, Penajam, Penajam Paser Utara</p>
               <h4 class="card-title">Komoditas Cabe</h4>
+            <a href="images/scholarship/L5_PPU_SESULI_SINAR BORNEO 3_MELON.jpg"><img class="card-img-top rounded-3" src="images/scholarship/L5_PPU_SESULI_SINAR BORNEO 3_MELON.jpg"
+                alt="galeri3" data-aos="flip-right"></a>
+            <div class="card-body">
+              <p><i class="ti-location-pin text-primary mr-2"></i> Kecamatan Waru, Penajam Paser Utara</p>
+              <h4 class="card-title">Komoditas Melon</h4>
             </div>
           </div>
         </div>
@@ -332,26 +399,35 @@
   <!-- FOOTER -->
   <section class="py-1" style="background-color: darkgreen;">
     <footer class="container">
-      <div class="row">
+      <!-- <div class="row"> -->
+        <div class="footer-content">
         <a target="_blank" href="https://dispertan.kaltimprov.go.id/">
           <img src="images/DINAS PANGAN, TANAMAN PANGAN.svg" alt="logo" style="width: 500px;">
         </a>
       </div>
-      <div class="row">
-        <div class="col col-lg-6 col-sm-6">
-          <h5 class="text-white text-center">Hubungi Kami</h5>
-          <p class="text-white">Jl. Basuki Rahmat No.6, Kelurahan Bugis, Kecamatan Samarinda Kota,</p>
-          <p class="text-white">Kota Samarinda, Provinsi Kalimantan Timur (75121)</p>
-          <p class="text-white">Telp : (0541) 742484, Fax. 0541-743867</p>
-          <p class="text-white mb-0">Email : dispertan@kaltimprov.go.id</p>
+
+      <!-- Kontak Kami dan Peta dalam satu baris -->
+       <div class="footer-contact-map">
+      <!-- Kontak Kami -->
+      <div class="footer-content">
+        <!-- <div class="col col-lg-6 col-sm-6"> -->
+          <h5 class="text-white">Kontak Kami</h5> 
+          <p class="text-white"><i class="fas fa-map-marker-alt"></i> <strong>Alamat:</strong> Jl. Basuki Rahmat No.6, Samarinda</p>
+          <p class="text-white"><i class="fas fa-envelope"></i> <strong>Email:</strong> <a href="mailto:dptph@kaltimprov.go.id">dptph@kaltimprov.go.id</a></p>
+          <p class="text-white"><i class="fas fa-clock"></i> <strong>Jam Kerja:</strong> Senin–Kamis: 07.30–16.00 WITA, Jumat: 07.30–11.00 WITA</p>
         </div>
+
 
         <!-- Peta -->
-        <div class="col col-lg-6 col-sm-6">
-          <div id="map" style="height: 300px; margin-bottom: 20px;"></div>
+        <!-- <div class="col col-lg-6 col-sm-6"> -->
+        <div class="footer-map">
+          <!-- <div id="map" style="height: 200px; width: 200px"></div> -->
+          <div id="map"></div>
         </div>
 
-        <div class="col col-lg-3 col-sm-3">
+        <!-- Menu di Bawah Kontak Kami -->
+        <!-- <div class="col col-lg-6 col-sm-6"> -->
+        <div class="col col-lg-6 col-sm-6">
           <h5 class="text-white">Menu</h5>
           <a href="webgis.html">
             <p class="text-white">Geospasial</p>
@@ -362,9 +438,14 @@
           <a href="galeri.html">
             <p class="text-white">Galeri Komoditas</p>
           </a>
+          <a href="webgis.html"><p class="text-white">Geospasial</p></a>
+          <a href=""><p class="text-white">Statistik</p></a>
+          <a href="galeri.html"><p class="text-white">Galeri Komoditas</p></a>
         </div>
-
-        <div class="col col-lg-3 col-sm-3">
+        
+        <!-- Sosial Media di Bawah Menu -->
+        <!-- <div class="col col-lg-12 col-sm-12"> -->
+        <div class="footer-social">
           <h5 class="text-white text-center">Sosial Media</h5>
           <div class="text-center">
             <a target="_blank" href="https://www.facebook.com/profile.php?id=100017162644745"
@@ -384,12 +465,10 @@
           KALIMANTAN TIMUR</p>
       </div>
     </footer>
-
-  </section>
-
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <!-- /FOOTER -->
+
 
   <!-- Auto Hide Navbar -->
   <script>
@@ -405,7 +484,7 @@
     }
 
     // Inisialisasi peta dan menambahkan marker di koordinat yang diberikan
-    var map = L.map('map').setView([-0.49116127082268457, 117.14904539488927], 13); // Koordinat X: 116.500007, Y: -1.56846
+    var map = L.map('map').setView([-0.49116127082268457, 117.14904539488927], 13);
 
     // Menambahkan Tile Layer (menggunakan OpenStreetMap sebagai contoh)
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -414,7 +493,7 @@
 
     // Menambahkan marker pada koordinat yang diberikan
     L.marker([-0.49116127082268457, 117.14904539488927]).addTo(map)
-      .bindPopup('DINAS PANGAN, TANAMAN PANGAN DAN HORTIKULTURA')
+      .bindPopup('Dinas Pangan, Tanaman Pangan dan Hortikultura Provinsi Kalimantan Timur')
       .openPopup();
   </script>
 </body>
